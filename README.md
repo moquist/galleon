@@ -1,48 +1,5 @@
-# galleon
+galleon
+=======
+<a title="By Myriam Thyes (Own work) [CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0) or GFDL (http://www.gnu.org/copyleft/fdl.html)], via Wikimedia Commons" href="http://commons.wikimedia.org/wiki/File%3AVenedig-galeone-16jh.jpg"><img width="128" alt="Venedig-galeone-16jh" src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Venedig-galeone-16jh.jpg/128px-Venedig-galeone-16jh.jpg"/></a>
 
-TODO: Brief description
-
-
-
-## Releases and Dependency Information
-
-* Releases are published to TODO_LINK
-
-* Latest stable release is TODO_LINK
-
-* All released versions TODO_LINK
-
-[Leiningen] dependency information:
-
-    [galleon "0.1.0-SNAPSHOT"]
-
-[Maven] dependency information:
-
-    <dependency>
-      <groupId>galleon</groupId>
-      <artifactId>galleon</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
-    </dependency>
-
-[Leiningen]: http://leiningen.org/
-[Maven]: http://maven.apache.org/
-
-
-
-## Usage
-
-TODO
-
-
-
-## Change Log
-
-* Version 0.1.0-SNAPSHOT
-
-
-
-## Copyright and License
-
-Copyright © 2014 TODO_INSERT_NAME
-
-TODO: [Choose a license](http://choosealicense.com/)
+Galleon will be VLACS' competencies-centric education tracking system.
