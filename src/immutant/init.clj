@@ -1,5 +1,6 @@
 (ns immutant.init
-  (:require [galleon]))
+  (:require [galleon]
+            [immutant.web :as web]))
 
 (galleon/start-system!)
 

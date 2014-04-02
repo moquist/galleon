@@ -60,7 +60,6 @@
 
   )
 
-
 (defn start-system!
   []
   (let [system (init-system-state!
@@ -69,7 +68,7 @@
     (assoc-in system [:web-server :immutant]
               (web/start galleon.applications/system-handler))))
 
-(defn stop-system
+(defn stop-system!
   [system]
   nil
   )
