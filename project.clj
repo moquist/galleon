@@ -16,7 +16,8 @@
              :dev-pro {:dependencies [[org.clojure/tools.namespace "0.2.4"]
                                       [com.datomic/datomic-free "0.9.4699"]]
                        :source-paths ["dev"]}
-             :production {:repositories [["my.datomic.com" {:url "https://my.datomic.com/repo"
-                                                            :username :env/lein_datomic_repo_username
-                                                            :password :env/lein_datomic_repo_password}]]
-                          :dependencies [[com.datomic/datomic-pro "0.9.4556"]]}})
+             :production {:dependencies [[com.datomic/datomic-free "0.9.4699"]]}
+             :production-pro {:repositories [["my.datomic.com" {:url "https://my.datomic.com/repo"
+                                                                :username :env/lein_datomic_repo_username
+                                                                :password :env/lein_datomic_repo_password}]]
+                              :dependencies [[com.datomic/datomic-pro "0.9.4556"]]}})
