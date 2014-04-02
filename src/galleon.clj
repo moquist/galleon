@@ -1,8 +1,9 @@
 (ns galleon
-  (:require [helmsman]
+  (:require [immutant.web :as web]
+            [immutant.messaging :as msg]
+            [helmsman]
             [galleon.applications]
             [galleon.cli]
-            [ring.adapter.jetty :as jetty]
             [datomic.api :as d]
             [clojure.edn])
   (:import (java.io File)))
@@ -24,10 +25,10 @@
 (defn init-system-state!
   "Creates the system state from the config and applications maps."
   [config-map applications]
-  (let [datomic-uri (:datomic-connection-url config-map)
+  (let [datomic-uri (:datomic-url config-map)
         db-create-rval (d/create-database datomic-uri)
         db-conn (d/connect datomic-uri)
-        system {:db db-conn
+        system {:db-conn db-conn
                 :config config-map}]
     (when db-create-rval
       (doseq [app applications]
@@ -35,27 +36,38 @@
           ((:init-fn app) system))))
     system))
 
-(defn start-jetty
-  "Starts a new jetty instance using our global app handler and provided
-  arguments for the web server."
-  [jetty-args]
-  (jetty/run-jetty
-    galleon.applications/system-handler
-    jetty-args))
+(comment
+(defn initialize!
+  []
+  (web/start "/" g-web/app)
+  
+  ;;;; TODO: Support adding new named queues.
+  ;; start the incoming message queue
+  (msg/start "queue.gangway-in-showevidence")
+  (msg/listen "queue.gangway-in-showevidence" gw-messaging/do-work)
 
-(defn stop-jetty
-  "Stops a particular jetty instance that is currently running."
-  [jetty-instance]
-  (.stop jetty-instance)
-  nil)
+  ;; start the outgoing message queue
+  (msg/start "queue.gangway-out-showevidence")
+  (msg/listen "queue.gangway-out-showevidence" gw-messaging/do-work)
 
-(defn start-system
-  [config-path]
+  ;; initialize db connection
+  ;; TODO: init datomic here (memdb is fine for now, eventually need configured URI)
+  #_(def db (edn/read-string (slurp (format "%s/.kilo/kilo-conf-sql-db.edn" (System/getProperty "user.home")))))
+  #_(k-sqldb/default-connection! db))
+
+  ;; in the context of immutant starting up, this function gets called
+  (initialize!)
+
+  )
+
+
+(defn start-system!
+  []
   (let [system (init-system-state!
-                 (load-system-config config-path)
-                 galleon.applications/system-applications)]
-    (assoc-in system [:web-server :jetty]
-              (start-jetty (get-in system [:config :web-server :jetty])))))
+                {:datomic-url "datomic:mem://galleon-test"} ;; TODO: make this configurable
+                galleon.applications/system-applications)]
+    (assoc-in system [:web-server :immutant]
+              (web/start galleon.applications/system-handler))))
 
 (defn stop-system
   [system]
@@ -64,9 +76,9 @@
 
 (defn -main [& args]
   (alter-var-root #'*read-eval* (constantly false))
-  (start-system
+  (start-system!
     (let [opts (galleon.cli/get-opts args)]
-      (start-system
+      (start-system!
         (:config opts default-config-path))))
   1)
 

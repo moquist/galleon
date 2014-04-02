@@ -5,10 +5,15 @@
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
   :dependencies [[vlacs/helmsman "0.1.4"]
+                 [org.immutant/immutant-web "1.1.0"]
+                 [org.immutant/immutant-messaging "1.1.0"]
+                 ^{:voom {:repo "github.com/vlacs/dossier"}}
                  [vlacs/dossier "0.1.4"]
                  [http-kit "2.1.16"]
                  [ring "1.2.1"]
                  [org.clojure/clojure "1.5.1"]]
+
+  :pedantic? :warn ; :abort
 
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [com.datomic/datomic-free "0.9.4699"]]
