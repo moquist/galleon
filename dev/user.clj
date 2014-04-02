@@ -22,21 +22,26 @@
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  ;; TODO
-  )
+  ;; TODO: Load up configs here.
+  (alter-var-root #'user/system
+                  (constantly
+                    {:web {:port 6543
+                           :join? false}})))
 
 (defn start
   "Starts the system running, updates the Var #'system."
   []
-  ;; TODO
-  )
+  ;; TODO: Start storage service and web server here.
+  (alter-var-root #'user/system
+                  assoc-in [:web :server] (galleon/start-jetty (:web system))))
 
 (defn stop
   "Stops the system if it is currently running, updates the Var
   #'system."
   []
-  ;; TODO
-  )
+  (when (not (nil? (get-in system [:web :server])))
+    (galleon/stop-jetty (get-in system [:web :server]))
+    (alter-var-root #'user/system assoc-in [:web :server] nil)))
 
 (defn go
   "Initializes and starts the system running."
