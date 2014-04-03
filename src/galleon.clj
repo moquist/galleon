@@ -5,7 +5,8 @@
             [galleon.applications]
             [galleon.cli]
             [datomic.api :as d]
-            [clojure.edn])
+            [clojure.edn]
+            [gangway.in :as gw-in])
   (:import (java.io File)))
 
 (def default-config-path "/etc/galleon.edn")
@@ -65,6 +66,10 @@
   (let [system (init-system-state!
                 {:datomic-url "datomic:mem://galleon-test"} ;; TODO: make this configurable
                 galleon.applications/system-applications)]
+    (msg/start "queue.gangway-in-showevidence")
+    (msg/listen "queue.gangway-in-showevidence" gw-in/do-work)
+
+
     (assoc-in system [:web-server :immutant]
               (web/start galleon.applications/system-handler))))
 

@@ -5,13 +5,15 @@
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
   :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.1.4-20140402_072918-g7d8e072"]
+                 [org.vlacs/helmsman "0.1.4-20140403_011404-gb0e9949"]
                  #_[org.immutant/immutant-web "1.1.0"]
                  #_[org.immutant/immutant-messaging "1.1.0"
                   :exclusions [io.netty/netty]]
                  ^{:voom {:repo "https://github.com/vlacs/dossier"}}
                  [org.vlacs/dossier "0.1.4-1-20140402_072947-g4c9edc2"
-                  :exclusions [hiccup org.clojure/tools.reader compojure ring/ring-core commons-codec]]
+                  :exclusions [hiccup org.clojure/tools.reader
+                               compojure ring/ring-core commons-codec
+                               com.datomic/datomic-free]]
                  [http-kit "2.1.16"]
                  #_[ring "1.2.1"]
                  [org.clojure/clojure "1.5.1"]]
