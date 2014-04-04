@@ -1,4 +1,4 @@
-(ns gangway.in
+(ns gangway.worker
   (:require [clojure.data.json :as json]
             [immutant.messaging :as msg]))
 
@@ -8,8 +8,7 @@
   {:put k-resource/set-data
    :get k-resource/get-data})
 
-(defn do-work
-  [message]
+(defn do-work [message]
   (spit "/tmp/do-work.txt" (str message))
   #_(let [parsed-message (json/read-str message :key-fn keyword)
         header (:header parsed-message)

@@ -6,7 +6,8 @@
             [galleon.cli]
             [datomic.api :as d]
             [clojure.edn]
-            [gangway.in :as gw-in])
+            [gangway.util :as gw-util]
+            [gangway.worker :as gw-worker])
   (:import (java.io File)))
 
 (def default-config-path "/etc/galleon.edn")
@@ -61,13 +62,28 @@
 
   )
 
+(defn start-queues! [& queues]
+  (spit "/tmp/db0.txt" (str "waka: 3 pizzas" queues))
+  (dorun (map (fn start-queues!- [q]
+                (let [q (gw-util/queues q)]
+                  (spit "/tmp/db1.txt" (str "waka: starting queue" (:name q)))
+                  (msg/start "queue.showevidence-in" #_(:name q))
+                  (if (:worker q) 
+                    ;;(msg/listen (:name q) (:worker q))
+                    ;;(msg/listen "queue.showevidence-in" (fn start-queues!-2 [msg] (spit "/tmp/dun.txt" (str msg))))
+                    (msg/listen "queue.showevidence-in" gw-worker/do-work)
+                    ;;(msg/listen "queue.showevidence-in" gw-worker/do-work)
+                    )))
+              queues)))
+
 (defn start-system!
   []
   (let [system (init-system-state!
                 {:datomic-url "datomic:mem://galleon-test"} ;; TODO: make this configurable
                 galleon.applications/system-applications)]
-    (msg/start "queue.gangway-in-showevidence")
-    (msg/listen "queue.gangway-in-showevidence" gw-in/do-work)
+
+    ;; Where is this state? Does it matter?
+    (start-queues! :showevidence)
 
 
     (assoc-in system [:web-server :immutant]

@@ -1,6 +1,6 @@
 (ns gangway.web
   (:require [helmsman]
-            [gangway.out :as gw-out]))
+            [gangway.publish :as gw-publish]))
 
 (def helmsman-definition
-  [[:put "/in/:queue-name/:txid" gw-out/fake-work]])
+  [[:put "/in/:qid/:txid" gw-publish/incoming]])
