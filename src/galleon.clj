@@ -67,11 +67,11 @@
   (dorun (map (fn start-queues!- [q]
                 (let [q (gw-util/queues q)]
                   (spit "/tmp/db1.txt" (str "waka: starting queue" (:name q)))
-                  (msg/start "queue.showevidence-in" #_(:name q))
+                  (msg/start (:name q))
                   (if (:worker q) 
                     ;;(msg/listen (:name q) (:worker q))
                     ;;(msg/listen "queue.showevidence-in" (fn start-queues!-2 [msg] (spit "/tmp/dun.txt" (str msg))))
-                    (msg/listen "queue.showevidence-in" gw-worker/do-work)
+                    (msg/listen (:name q) (:worker q))
                     ;;(msg/listen "queue.showevidence-in" gw-worker/do-work)
                     )))
               queues)))
