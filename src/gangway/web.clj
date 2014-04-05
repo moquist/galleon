@@ -3,4 +3,4 @@
             [gangway.publish :as gw-publish]))
 
 (def helmsman-definition
-  [[:put "/in/:qid/:txid" gw-publish/incoming]])
+  [[:put "/in/:qid/:txid" gw-publish/incoming!]])
