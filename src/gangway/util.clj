@@ -3,5 +3,5 @@
 
 (def queues
   {:showevidence {:name "queue.showevidence-in"
-                  :worker gw-worker/do-work}})
+                  :worker-fn gw-worker/do-work}})
 

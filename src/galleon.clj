@@ -67,8 +67,8 @@
    (map (fn start-queues!- [q]
           (let [q (gw-util/queues q)]
             (msg/start (:name q))
-            (if (:worker q) 
-              (msg/listen (:name q) (:worker q)))))
+            (if (:worker-fn q) 
+              (msg/listen (:name q) (:worker-fn q)))))
         queues)))
 
 (defn start-system!
