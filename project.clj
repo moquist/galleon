@@ -16,6 +16,7 @@
                                com.datomic/datomic-free]]
                  [http-kit "2.1.16"]
                  #_[ring "1.2.1"]
+                 [liberator "0.11.0"]
                  [org.clojure/clojure "1.5.1"]]
 
   :pedantic? :warn ; :abort
