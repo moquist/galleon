@@ -10,7 +10,9 @@
 (defresource incoming!
   :allowed-methods [:put]
   :available-media-types ["text/plain"]
-  :put! (fn incoming!- [req]
-          (let [qid (keyword (get-in req [:request :route-params :qid]))]
-            (publish! qid (str req) #_(get-in req [:request :body])))))
+  :put! (fn incoming!- [ctx]
+          (let [rp (get-in ctx [:request :route-params])
+                qid (keyword (:qid rp))
+                txid (:txid rp)]
+            (publish! qid (slurp (get-in ctx [:request :body]))))))
 

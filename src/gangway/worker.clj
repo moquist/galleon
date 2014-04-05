@@ -9,13 +9,14 @@
    :get k-resource/get-data})
 
 (defn do-work [message]
-  (spit "/tmp/do-work.txt" (str message))
-  #_(let [parsed-message (json/read-str message :key-fn keyword)
-        header (:header parsed-message)
-        payload (:payload parsed-message)
-        entity (keyword (:entity-type header))
-        operation (keyword (:operation header))]
-    ((operation entity-functions) entity (get-in header [:entity-id :user-id]) payload))
+  (let [parsed-message (json/read-str message :key-fn keyword)
+        ;;header (:header parsed-message)
+        ;;payload (:payload parsed-message)
+        ;;entity (keyword (:entity-type header))
+        ;;operation (keyword (:operation header))
+        ]
+    (spit "/tmp/do-work.txt" (str parsed-message))
+    #_((operation entity-functions) entity (get-in header [:entity-id :user-id]) payload))
   true
   )
 
