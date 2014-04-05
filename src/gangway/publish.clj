@@ -1,6 +1,7 @@
 (ns gangway.publish
   (:require [immutant.messaging :as msg]
             [liberator.core :refer [defresource]]
+            [datomic.api :as d]
             [gangway.util :as gw-util]))
 
 (defn publish! [qid message]
