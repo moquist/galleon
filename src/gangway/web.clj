@@ -4,10 +4,20 @@
        outside enters or leaves Galleon except by the Gangway."}
   gangway.web
   (:require [ring.middleware.params :refer [wrap-params]]
+            [liberator.core :refer [defresource]]
             [liberator.dev :refer [wrap-trace]]
             [gangway.publish :as gw-publish]))
 
+(defresource incoming!
+  :allowed-methods [:post]
+  :available-media-types ["text/plain"]
+  :post! (fn incoming!- [ctx]
+          (let [rp (get-in ctx [:request :route-params])
+                qid (keyword (:qid rp))]
+            ;; TODO: assert in datomic to (1) have a complete queue log and (2) ensure idempotency
+            (gw-publish/publish! qid (slurp (get-in ctx [:request :body]))))))
+
 (def helmsman-definition
-  [[:post "/in/:qid" gw-publish/incoming!]
+  [[:post "/in/:qid" incoming!]
    [wrap-params]
    [wrap-trace :header :ui]])
