@@ -9,11 +9,11 @@
     (msg/publish qn (str message))))
 
 (defresource incoming!
-  :allowed-methods [:put]
+  :allowed-methods [:post]
   :available-media-types ["text/plain"]
-  :put! (fn incoming!- [ctx]
+  :post! (fn incoming!- [ctx]
           (let [rp (get-in ctx [:request :route-params])
-                qid (keyword (:qid rp))
-                txid (:txid rp)]
+                qid (keyword (:qid rp))]
+            ;; TODO: assert in datomic to (1) have a complete queue log and (2) ensure idempotency
             (publish! qid (slurp (get-in ctx [:request :body]))))))
 

@@ -5,6 +5,6 @@
             [gangway.publish :as gw-publish]))
 
 (def helmsman-definition
-  [[:put "/in/:qid/:txid" gw-publish/incoming!]
+  [[:post "/in/:qid" gw-publish/incoming!]
    [wrap-params]
    [wrap-trace :header :ui]])
