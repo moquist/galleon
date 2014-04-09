@@ -1,6 +1,5 @@
 (ns galleon
   (:require [immutant.web :as web]
-            [immutant.messaging :as msg]
             [helmsman]
             [galleon.applications]
             [galleon.cli]
@@ -38,15 +37,6 @@
           ((:init-fn app) system))))
     system))
 
-(defn start-queues! [& queues]
-  (dorun
-   (map (fn start-queues!- [q]
-          (let [q (gw-util/queues q)]
-            (msg/start (:name q))
-            (if (:worker-fn q) 
-              (msg/listen (:name q) (:worker-fn q)))))
-        queues)))
-
 (defn start-system!
   []
   (let [system (init-system-state!
@@ -54,7 +44,7 @@
                 galleon.applications/system-applications)]
 
     ;; Where is this state? Does it matter?
-    (start-queues! :showevidence)
+    (gw-util/start-queues! gw-util/queues)
 
 
     (assoc-in system [:web-server :immutant]

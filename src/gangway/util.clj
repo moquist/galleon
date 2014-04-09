@@ -1,5 +1,6 @@
 (ns gangway.util
-  (:require [gangway.worker :as gw-worker]))
+  (:require [immutant.messaging :as msg]
+            [gangway.worker :as gw-worker]))
 
 ;; TODO: Figure out how to support incoming and outgoing queues with
 ;; the same key in a reasonable way.
@@ -8,4 +9,13 @@
 (def queues
   {:showevidence {:name "queue.showevidence-in"
                   :worker-fn gw-worker/do-work}})
+
+(defn start-queues! [queues]
+  (dorun
+   (map (fn start-queues!- [[k q]]
+          (msg/start (:name q))
+          (if (:worker-fn q) 
+            (msg/listen (:name q) (:worker-fn q))))
+        queues)))
+
 
