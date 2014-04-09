@@ -14,3 +14,4 @@ repl
 resources/public/js*
 *#*#
 *.#*
+.descriptors*
