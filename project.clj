@@ -19,7 +19,7 @@
                  [liberator "0.11.0"]
                  [clj-http "0.9.1"]
                  [org.clojure/data.json "0.2.4"]
-                 [org.clojure/clojure "1.6.0"]]]
+                 [org.clojure/clojure "1.6.0"]]
 
   :pedantic? :warn ; :abort
   :immutant {:context-path "/"}
