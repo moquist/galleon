@@ -21,7 +21,6 @@
 
 (defn make-app-context
   [app]
-  (prn app)
   (into [:context (:helmsman-context app)]
         (:helmsman-definition app)))
 

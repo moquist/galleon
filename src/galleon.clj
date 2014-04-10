@@ -24,7 +24,7 @@
     (clojure.edn/read-string (slurp path))
     (throw (Exception. (str "Config file missing: " path)))))
 
-(defn init-system-state!
+(defn init-system!
   "Creates the system state from the config and applications maps."
   [config-map applications]
   (let [datomic-uri (:datomic-url config-map)
@@ -41,7 +41,7 @@
 (defn start-system!
   []
   (let [apps galleon.applications/system-applications
-        system (init-system-state!
+        system (init-system!
                 (load-system-config "to/some/path") ;; TODO: Make this configurable.
                  apps)]
 
