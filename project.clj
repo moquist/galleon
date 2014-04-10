@@ -14,6 +14,9 @@
                   :exclusions [hiccup org.clojure/tools.reader
                                compojure ring/ring-core commons-codec
                                com.datomic/datomic-free]]
+                 ^{:voom {:repo "https://github.com/vlacs/navigator"}}
+                 [org.vlacs/navigator "0.1.0-20140410_082313-g18713ff"
+                  :exclusions [com.datomic/datomic-free]]
                  [http-kit "2.1.16"]
                  #_[ring "1.2.1"]
                  [liberator "0.11.0"]
