@@ -20,7 +20,7 @@
                  [clj-http "0.9.1"]
                  [org.clojure/data.json "0.2.4"]
                  [org.immutant/fntest "0.5.3"]
-                 [org.clojure/clojure "1.5.1"]]
+                 [org.clojure/clojure "1.6.0"]]
 
   :pedantic? :warn ; :abort
   :immutant {:context-path "/"}
