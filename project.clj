@@ -5,9 +5,9 @@
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
   :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.1.4-20140403_011404-gb0e9949"]
-                 [org.immutant/immutant-web "1.1.0"]
-                 [org.immutant/immutant-messaging "1.1.0"
+                 [org.vlacs/helmsman "0.1.9-20140407_022514-g5b65c22"]
+                 [org.immutant/immutant-web "1.1.1"]
+                 [org.immutant/immutant-messaging "1.1.1"
                   :exclusions [io.netty/netty]]
                  ^{:voom {:repo "https://github.com/vlacs/dossier"}}
                  [org.vlacs/dossier "0.1.4-1-20140402_072947-g4c9edc2"
@@ -19,7 +19,7 @@
                  [liberator "0.11.0"]
                  [clj-http "0.9.1"]
                  [org.clojure/data.json "0.2.4"]
-                 [org.immutant/fntest "0.5.3"]
+                 #_[org.immutant/fntest "0.5.3"]
                  [org.clojure/clojure "1.5.1"]]
 
   :pedantic? :warn ; :abort

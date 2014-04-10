@@ -19,7 +19,8 @@
 
 (defn load-system-config
   [path]
-  (if (file-exists? path)
+  {:datomic-url "datomic:mem://galleon-test"}
+  #_(if (file-exists? path)
     (clojure.edn/read-string (slurp path))
     (throw (Exception. (str "Config file missing: " path)))))
 
@@ -39,25 +40,51 @@
 
 (defn start-system!
   []
-  (let [system (init-system-state!
-                {:datomic-url "datomic:mem://galleon-test"} ;; TODO: make this configurable
-                galleon.applications/system-applications)]
+  (let [apps galleon.applications/system-applications
+        system (init-system-state!
+                (load-system-config "to/some/path") ;; TODO: Make this configurable.
+                 apps)]
 
     (gw-util/start-queues! gw-util/queues)
+
+    ;;; Lets get some app-magic started, shall we?
+    (loop [system-startup-state system
+           app (first apps)
+           remaining-apps (vec (rest apps))]
+      (if (nil? app)
+        system-startup-state
+        (recur
+          (if-let [start-fn! (:start-fn app nil)]
+            (start-fn! system-startup-state)
+            system-startup-state)
+          (first remaining-apps)
+          (vec (rest remaining-apps)))))
 
     (assoc-in system [:web-server :immutant]
               (web/start galleon.applications/system-handler))))
 
 (defn stop-system!
   [system]
-  nil
-  )
+  (web/stop)
+  (let [apps galleon.applications/system-applications]
+    (loop [system-shutdown-state system
+           app (last apps)
+           remaining-apps (vec (butlast apps))]
+      (if (nil? app)
+        system-shutdown-state
+        (recur
+          (if-let [stop-fn! (:stop-fn! app)]
+            (stop-fn! system-shutdown-state)
+            system-shutdown-state)
+          (last remaining-apps)
+          (vec (butlast remaining-apps)))))))
 
-(defn -main [& args]
-  (alter-var-root #'*read-eval* (constantly false))
-  (start-system!
-    (let [opts (galleon.cli/get-opts args)]
-      (start-system!
-        (:config opts default-config-path))))
-  1)
+;;; We can't use this anymore. Should we even keep it?
+#_(defn -main [& args]
+    (alter-var-root #'*read-eval* (constantly false))
+    (start-system!
+      (let [opts (galleon.cli/get-opts args)]
+        (start-system!
+          (:config opts default-config-path))))
+    1)
 
