@@ -8,14 +8,17 @@
 ;; queues would be presented via REST.
 (def queues
   {:showevidence {:name "queue.showevidence-in"
+                  ;; having a :worker-fn implies that galleon should start a listener
                   :worker-fn gw-worker/do-work}})
 
-(defn start-queues! [queues]
-  (dorun
-   (map (fn start-queues!- [[k q]]
-          (msg/start (:name q))
-          (if (:worker-fn q) 
-            (msg/listen (:name q) (:worker-fn q))))
-        queues)))
+(defn start-queues!
+  ([] (start-queues! queues))
+  ([queues]
+     (dorun
+      (map (fn start-queues!- [[k q]]
+             (msg/start (:name q))
+             (if (:worker-fn q) 
+               (msg/listen (:name q) (:worker-fn q))))
+           queues))))
 
 

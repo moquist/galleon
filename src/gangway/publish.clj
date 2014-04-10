@@ -5,5 +5,5 @@
 
 (defn publish! [qid message]
   (let [qn (get-in gw-util/queues [qid :name])]
-    (msg/publish qn (str message))))
+    (msg/publish qn message)))
 

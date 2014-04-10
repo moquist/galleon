@@ -2,6 +2,7 @@
   (:require [helmsman]
             [dossier.core :as dossier]
             [dossier.system]
+            [gangway.util :as gw-util]
             [gangway.web]))
 
 (def system-applications
@@ -11,7 +12,7 @@
               :helmsman-context "dossier"
               :helmsman-definition dossier/helmsman-definition}
    "gangway" {:init-fn nil
-              :start-fn nil
+              :start-fn nil #_gw-util/start-queues!
               :stop-fn nil
               :helmsman-context "gangway"
               :helmsman-definition gangway.web/helmsman-definition}})

@@ -43,9 +43,7 @@
                 {:datomic-url "datomic:mem://galleon-test"} ;; TODO: make this configurable
                 galleon.applications/system-applications)]
 
-    ;; Where is this state? Does it matter?
     (gw-util/start-queues! gw-util/queues)
-
 
     (assoc-in system [:web-server :immutant]
               (web/start galleon.applications/system-handler))))

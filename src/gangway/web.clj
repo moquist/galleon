@@ -17,7 +17,12 @@
             ;; TODO: assert in datomic to (1) have a complete queue log and (2) ensure idempotency
             (gw-publish/publish! qid (slurp (get-in ctx [:request :body]))))))
 
+(defresource hi-there
+  :available-media-types ["text/plain"]
+  :handle-ok (fn [_] "hi there"))
+
 (def helmsman-definition
   [[:post "/in/:qid" incoming!]
+   [:get "/out" hi-there]
    [wrap-params]
    [wrap-trace :header :ui]])
