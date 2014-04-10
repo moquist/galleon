@@ -3,7 +3,6 @@
             [clj-http.client :as http]
             [immutant.messaging :as msg]
             [immutant.util]
-            [fntest.core :as fnt]
             [clojure.data.json :as json]
             [gangway.util :as gw-util]
             [gangway.web :as gw-web]))
