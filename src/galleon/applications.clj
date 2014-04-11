@@ -3,15 +3,20 @@
             [dossier.core :as dossier]
             [dossier.system]
             [gangway.util :as gw-util]
-            [gangway.web]))
+            [gangway.web]
+            [navigator]))
 
 (def system-applications
   [{:app-name "Dossier"
-    :init-fn! dossier.system/db-init
+    :init-fn! nil #_dossier.system/db-init ;; this is broken
     :start-fn! nil
     :stop-fn! nil
     :helmsman-context "dossier"
     :helmsman-definition dossier/helmsman-definition}
+   {:app-name "Navigator"
+    :init-fn! navigator/init!
+    :start-fn! nil
+    :stop-fn! nil}
    {:app-name "Gangway"
     :init-fn! nil
     :start-fn! nil #_gw-util/start-queues!
