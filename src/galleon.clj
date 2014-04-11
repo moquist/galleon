@@ -10,6 +10,7 @@
   (:import (java.io File)))
 
 (def default-config-path "/etc/galleon.edn")
+(def system nil)
 
 (defn file-exists?
   [path]
