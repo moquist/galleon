@@ -35,12 +35,12 @@
                 :config config-map}]
     (when db-create-rval
       (doseq [app applications]
-        (when (fn? (:init-fn app))
-          ((:init-fn app) system))))
+        (when (fn? (:init-fn! app))
+          ((:init-fn! app) system))))
     system))
 
 (defn start-system!
-  []
+  [_] ;; TODO: handle incoming system here?
   (let [apps galleon.applications/system-applications
         system (init-system!
                 (load-system-config "to/some/path") ;; TODO: Make this configurable.
