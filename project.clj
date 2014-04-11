@@ -6,8 +6,8 @@
             :url "http://choosealicense.com/"}
   :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.1.9-20140407_022514-g5b65c22"]
-                 [org.immutant/immutant-web "1.1.1"]
-                 [org.immutant/immutant-messaging "1.1.1"
+                 [org.immutant/immutant "1.1.1"]
+                 #_[org.immutant/immutant-messaging "1.1.1"
                   :exclusions [io.netty/netty]]
                  ^{:voom {:repo "https://github.com/vlacs/dossier"}}
                  [org.vlacs/dossier "0.1.4-1-20140402_072947-g4c9edc2"
