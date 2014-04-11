@@ -49,4 +49,8 @@
   [query & data-sources]
   (pprint (apply touch-that query data-sources))) 
 
+(comment
+  (navigator/create-competency (:db-conn galleon/system) "comp1" "v1" :comp.status/active)
+  (ptouch-that '[:find ?e :where [?e :comp/name]])
+  )
 
