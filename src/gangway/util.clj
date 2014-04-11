@@ -12,13 +12,26 @@
                   :worker-fn gw-worker/do-work}})
 
 (defn start-queues!
-  ([] (start-queues! queues))
-  ([queues]
+;; TODO: handle exceptions
+  ([system] (start-queues! system queues))
+  ([system queues]
      (dorun
       (map (fn start-queues!- [[k q]]
              (msg/start (:name q))
              (if (:worker-fn q) 
                (msg/listen (:name q) (:worker-fn q))))
-           queues))))
+           queues))
+     (assoc-in system [:gangway :queues]
+               (set (concat (get-in system [:gangway :queues])
+                            (keys queues))))))
 
-
+(defn stop-queues!
+;; TODO: handle exceptions
+  ([system] (stop-queues! system queues))
+  ([system queues]
+     (dorun
+      (map (fn stop-queues!- [k]
+             (let [q (queues k)]
+               (msg/stop (:name q))))
+           (get-in system [:gangway :queues])))
+     (assoc-in system [:gangway :queues] #{})))
