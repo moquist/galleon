@@ -10,11 +10,26 @@
             [galleon]
             [navigator]))
 
+(defn stop! []
+  (alter-var-root #'galleon/system galleon/stop-system!))
+
+(defn start! []
+  (alter-var-root #'galleon/system galleon/start-system!))
+
 (defn reset
   "If you are accustomed to tools.namespace and reset, you can use this.
    It makes you feel better."
   []
-  (reload-project!))
+  (stop!)
+  (reload-project!)
+  (start!))
+
+(defn reset-and-delete-db! [delete-db]
+  (when (= :delete-db delete-db)
+    (stop!)
+    (d/delete-database (get-in galleon/system [:config :datomic-url]))
+    (reload-project!)
+    (start!)))
 
 (defn touch-that
   "Execute the specified query on the current DB and return the
