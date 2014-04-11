@@ -11,19 +11,23 @@
                   ;; having a :worker-fn implies that galleon should start a listener
                   :worker-fn gw-worker/do-work}})
 
+(defn start-queue! [system [k q]]
+  (let [n (:name q)
+        worker-fn (:worker-fn q)]
+    (msg/start n)
+    (if worker-fn
+      (msg/listen n (partial worker-fn (:db-conn system))))))
+
+
 (defn start-queues!
 ;; TODO: handle exceptions
   ([system] (start-queues! system queues))
   ([system queues]
-     (dorun
-      (map (fn start-queues!- [[k q]]
-             (msg/start (:name q))
-             (if (:worker-fn q) 
-               (msg/listen (:name q) (:worker-fn q))))
-           queues))
-     (assoc-in system [:gangway :queues]
-               (set (concat (get-in system [:gangway :queues])
-                            (keys queues))))))
+     (dorun (map (partial start-queue! system) queues))
+     (let [path [:gangway :queues]]
+       (assoc-in system path
+                 (set (concat (get-in system path)
+                              (keys queues)))))))
 
 (defn stop-queues!
 ;; TODO: handle exceptions
