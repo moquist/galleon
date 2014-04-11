@@ -33,10 +33,9 @@
         db-conn (d/connect datomic-uri)
         system {:db-conn db-conn
                 :config config-map}]
-    (when db-create-rval
-      (doseq [app applications]
-        (when (fn? (:init-fn! app))
-          ((:init-fn! app) system))))
+    (doseq [app applications]
+      (when (fn? (:init-fn! app))
+        ((:init-fn! app) system)))
     system))
 
 (defn start-system!
