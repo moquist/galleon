@@ -1,5 +1,5 @@
 (ns immutant.init
   (:require [galleon]))
 
-(galleon/start-system!)
+(alter-var-root #'galleon/system galleon/start-system!)
 
