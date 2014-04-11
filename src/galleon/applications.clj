@@ -31,8 +31,8 @@
 
 (def helmsman-definition
   (into
-    [[:get "/" (constantly "Some page.")]]
-    (map make-app-context system-applications)))
+   [[:get "/" (constantly "Some page.")]]
+    (map make-app-context (remove #(nil? (:helmsman-context %)) system-applications))))
 
 (def system-handler
   (helmsman/compile-routes helmsman-definition))
