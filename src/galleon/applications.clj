@@ -19,7 +19,7 @@
     :stop-fn! nil}
    {:app-name "Gangway"
     :init-fn! nil
-    :start-fn! nil #_gw-util/start-queues!
+    :start-fn! gw-util/start-queues!
     :stop-fn! nil
     :helmsman-context "gangway"
     :helmsman-definition gangway.web/helmsman-definition}])

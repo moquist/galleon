@@ -45,6 +45,7 @@
                 (load-system-config "to/some/path") ;; TODO: Make this configurable.
                  apps)]
 
+    #_
     (gw-util/start-queues! gw-util/queues)
 
     ;;; Lets get some app-magic started, shall we?
