@@ -54,7 +54,7 @@
       (if (nil? app)
         system-startup-state
         (recur
-          (if-let [start-fn! (:start-fn app nil)]
+          (if-let [start-fn! (:start-fn! app nil)]
             (start-fn! system-startup-state)
             system-startup-state)
           (first remaining-apps)
