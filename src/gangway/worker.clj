@@ -1,22 +1,41 @@
 (ns gangway.worker
   (:require [clojure.data.json :as json]
-            [immutant.messaging :as msg]))
+            [immutant.messaging :as msg]
+            [navigator]))
 
-#_(def entity-functions
+(def worker-dispatch
   "Maps incoming 'operation' value with a function that implements
    analagous operation via Korma db functions."
-  {:put k-resource/set-data
-   :get k-resource/get-data})
+  {:assert
+   {:task (fn meep [& args] (spit "/tmp/waka.txt" [:patched args] :append true))
+    #_
+    navigator/task-in}})
 
-(defn do-work [message]
-  (let [parsed-message (json/read-str message :key-fn keyword)
-        ;;header (:header parsed-message)
-        ;;payload (:payload parsed-message)
-        ;;entity (keyword (:entity-type header))
-        ;;operation (keyword (:operation header))
-        ]
-    (spit "/tmp/do-work.txt" (str parsed-message))
-    #_((operation entity-functions) entity (get-in header [:entity-id :user-id]) payload))
-  true
+(defn get-worker-fn [message]
+  (let [header (:header message)
+        op (keyword (:operation header))
+        entity-type (keyword (:entity-type header))]
+    (get-in worker-dispatch [op entity-type])))
+
+(defn dispatch [db-conn message]
+  (let [wf (get-worker-fn message)]
+  ((get-worker-fn message) db-conn message)))
+
+(defn do-work [db-conn messages]
+  (let [parsed-messages (json/read-str messages :key-fn keyword)]
+    (doall (map (partial dispatch db-conn) parsed-messages))))
+
+(comment
+
+  (def messages
+    (json/read-str
+     (json/json-str
+      [{:header {:operation :assert
+                 :entity-id {:task-id 17}
+                 :entity-type :task}
+        :payload {:entity {:name "tie shoes (together)"
+                           :version "v3"
+                           :competency-parents [1 2 3]}}}])
+     :key-fn keyword))
   )
 
