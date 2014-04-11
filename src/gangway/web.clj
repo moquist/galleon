@@ -14,7 +14,6 @@
   :post! (fn incoming!- [ctx]
           (let [rp (get-in ctx [:request :route-params])
                 qid (keyword (:qid rp))]
-            ;; TODO: assert in datomic to (1) have a complete queue log and (2) ensure idempotency
             (gw-publish/publish! qid (slurp (get-in ctx [:request :body]))))))
 
 (defresource hi-there
