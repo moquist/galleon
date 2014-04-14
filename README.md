@@ -12,9 +12,7 @@ Dev/Test Workflow
     1. Run ```lein immutant install```.
 1. Add ```[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]``` to your
    ```:plugins``` in ```~/.lein/profiles.clj```. For example, this should work:
-   ```clojure
-   {:user {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}}
-   ```
+   ```{:user {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}}```
     1. Run ```lein voom freshen``` to get the latest commits for helmsman, dossier, etc.
     1. Run ```lein voom build-deps``` to pull and build those dependencies and install them in your ~/.m2/ tree.
     1. COMMENT OUT the lein-voom dep in your ~/.lein/profiles.clj file, because
@@ -25,13 +23,9 @@ Dev/Test Workflow
        easiest way to comment it out is to use the ignore-next-form reader
        macro: ```#_```. So the above ~/.lein/profiles.clj file would change from
        this:
-       ```clojure
-       {:user {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}}
-       ```
+       ```{:user {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}}```
        to this:
-       ```clojure
-       {:user {:plugins [#_[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}}
-       ```
+       ```{:user {:plugins [#_[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}}```
 1. Deploy galleon to immutant:
     1. ```cd galleon```
     1. ```lein immutant deploy```
