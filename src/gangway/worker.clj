@@ -7,9 +7,7 @@
   "Maps incoming 'operation' value with a function that implements
    analagous operation via Korma db functions."
   {:assert
-   {:task (fn meep [& args] (spit "/tmp/waka.txt" [:patched args] :append true))
-    #_
-    navigator/task-in}})
+   {:task navigator/task-in}})
 
 (defn get-worker-fn [message]
   (let [header (:header message)

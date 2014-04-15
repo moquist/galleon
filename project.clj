@@ -15,7 +15,7 @@
                                compojure ring/ring-core commons-codec
                                com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "datomic"}}
-                 [org.vlacs/navigator "0.1.0-20140411_022137-g30d6a55"
+                 [org.vlacs/navigator "0.1.0-20140414_052131-g60f832d"
                   :exclusions [com.datomic/datomic-free]]
                  [http-kit "2.1.16"]
                  #_[ring "1.2.1"]
