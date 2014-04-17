@@ -30,7 +30,8 @@
   :profiles {:voom {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}
              :dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [com.datomic/datomic-free "0.9.4699"
-                                   :exclusions [commons-codec]]]
+                                   :exclusions [commons-codec]]
+                                  [org.clojure/test.check "0.5.7"]]
                    :source-paths ["dev"]}
              :dev-pro {:dependencies [[org.clojure/tools.namespace "0.2.4"]
                                       [com.datomic/datomic-free "0.9.4699"
