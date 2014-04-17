@@ -15,12 +15,13 @@
   (let [n (:name q)
         worker-fn (:worker-fn q)]
     (msg/start n)
-    (if worker-fn
+    (when worker-fn
       (msg/listen n (partial worker-fn (:db-conn system))))))
 
 
 (defn start-queues!
 ;; TODO: handle exceptions
+;; TODO: why aren't our queues in system?
   ([system] (start-queues! system queues))
   ([system queues]
      (dorun (map (partial start-queue! system) queues))
