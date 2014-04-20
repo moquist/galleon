@@ -26,8 +26,7 @@
 (defspec fixed-abstract-message
   ;; testing that reading EDN data structure into JSON and converting
   ;; back yields the same data structure.
-  ;; Note: This test fails. Committing failing test to show how
-  ;; test.check reports failures.
+  ;; Note: Fixed by adding :key-fn keyword arg to json/read-str.
   (prop/for-all [ab-message (gen/vector (gen/map gen/keyword gen/string))]
     (= ab-message (-> ab-message
                       (json/json-str)
