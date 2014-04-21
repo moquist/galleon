@@ -6,7 +6,8 @@
             [datomic.api :as d]
             [clojure.edn]
             [gangway.util :as gw-util]
-            [gangway.worker :as gw-worker])
+            [gangway.worker :as gw-worker]
+            [datomic-schematode.core :as schematode])
   (:import (java.io File)))
 
 (def default-config-path "/etc/galleon.edn")
@@ -25,6 +26,15 @@
     (clojure.edn/read-string (slurp path))
     (throw (Exception. (str "Config file missing: " path)))))
 
+(defn init-schema!
+  "Combines schematode schema and transacts it in."
+  [db-conn applications]
+  (schematode/init-schematode-constraints! db-conn)
+  (schematode/load-schema! db-conn
+                           (reduce (fn combine-schemas- [schema app] (concat schema (:schema app)))
+                                   []
+                                   applications)))
+
 (defn init-system!
   "Creates the system state from the config and applications maps."
   [config-map applications]
@@ -33,6 +43,7 @@
         db-conn (d/connect datomic-uri)
         system {:db-conn db-conn
                 :config config-map}]
+    (init-schema! db-conn applications)
     (doseq [app applications]
       (when (fn? (:init-fn! app))
         ((:init-fn! app) system)))

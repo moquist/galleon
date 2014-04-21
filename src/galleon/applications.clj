@@ -4,7 +4,7 @@
             [dossier.system]
             [gangway.util :as gw-util]
             [gangway.web]
-            [navigator]))
+            [navigator.schema :as n-schema]))
 
 (def system-applications
   [{:app-name "Dossier"
@@ -14,9 +14,7 @@
     :helmsman-context "dossier"
     :helmsman-definition dossier/helmsman-definition}
    {:app-name "Navigator"
-    :init-fn! navigator/init!
-    :start-fn! nil
-    :stop-fn! nil}
+    :schema n-schema/schema}
    {:app-name "Gangway"
     :init-fn! nil
     :start-fn! gw-util/start-queues!
