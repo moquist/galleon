@@ -4,10 +4,10 @@
   :url "https://www.github.com/vlacs/galleon"
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
-  :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.1.9-20140407_022514-g5b65c22"]
+  :dependencies [;;;^{:voom {:repo "https://github.com/vlacs/helmsman"}}
+                 [org.vlacs/helmsman "0.1.10"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
-                 [org.vlacs/timber "0.1.2-20140415_040708-g5bf5ed1"]
+                 [org.vlacs/timber "0.1.2-20140416_030230-g6c2cff2"]
                  [org.immutant/immutant "1.1.1"]
                  #_[org.immutant/immutant-messaging "1.1.1"
                   :exclusions [io.netty/netty]]
@@ -17,7 +17,7 @@
                                compojure ring/ring-core commons-codec
                                com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "datomic"}}
-                 [org.vlacs/navigator "0.1.0-20140414_052131-g60f832d"
+                 [org.vlacs/navigator "0.1.0-20140415_085604-gc2930f8"
                   :exclusions [com.datomic/datomic-free]]
                  [http-kit "2.1.16"]
                  #_[ring "1.2.1"]

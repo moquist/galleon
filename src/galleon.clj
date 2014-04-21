@@ -38,6 +38,7 @@
         ((:init-fn! app) system)))
     system))
 
+;;; TODO: Give reduce a try instead of (l)oop-recur.
 (defn start-system!
   [_] ;; TODO: handle incoming system here?
   (let [apps galleon.applications/system-applications
