@@ -5,7 +5,7 @@
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
   :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.1.9-20140407_022514-g5b65c22"]
+                 [org.vlacs/helmsman "0.2.2-20140421_050142-g5fd4ef4"]
                  [org.immutant/immutant "1.1.1"]
                  #_[org.immutant/immutant-messaging "1.1.1"
                   :exclusions [io.netty/netty]]
@@ -14,8 +14,8 @@
                   :exclusions [hiccup org.clojure/tools.reader
                                compojure ring/ring-core commons-codec
                                com.datomic/datomic-free]]
-                 ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "datomic"}}
-                 [org.vlacs/navigator "0.1.0-20140414_052131-g60f832d"
+                 ^{:voom {:repo "https://github.com/vlacs/navigator"}}
+                 [org.vlacs/navigator "0.1.0-20140421_052127-gf2b3b75"
                   :exclusions [com.datomic/datomic-free]]
                  [http-kit "2.1.16"]
                  #_[ring "1.2.1"]
