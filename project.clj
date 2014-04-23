@@ -5,8 +5,10 @@
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
   :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.2.2-20140421_050142-g5fd4ef4"]
-                 [org.immutant/immutant "1.1.1"]
+                 [org.vlacs/helmsman "0.2.4-20140422_064524-gd8f59fb"
+                  :exclusions [org.clojure/tools.macro]]
+                 [org.immutant/immutant "1.1.1"
+                  :exclusions [org.clojure/core.memoize io.netty/netty org.hornetq/hornetq-core-client]]
                  #_[org.immutant/immutant-messaging "1.1.1"
                   :exclusions [io.netty/netty]]
                  ^{:voom {:repo "https://github.com/vlacs/dossier"}}
