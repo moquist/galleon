@@ -5,20 +5,15 @@
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
   :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.2.4-20140422_064524-gd8f59fb"
-                  :exclusions [org.clojure/tools.macro]]
+                 [org.vlacs/helmsman "0.2.4-20140428_060604-g4760845"]
                  [org.immutant/immutant "1.1.1"
                   :exclusions [org.clojure/core.memoize io.netty/netty org.hornetq/hornetq-core-client]]
+                 ^{:voom {:repo "https://github.com/vlacs/timber"}}
+                 [org.vlacs/timber "0.1.2-20140423_024315-g34c314d"]
                  #_[org.immutant/immutant-messaging "1.1.1"
                   :exclusions [io.netty/netty]]
-                 ^{:voom {:repo "https://github.com/vlacs/dossier"}}
-                 [org.vlacs/dossier "0.1.4-1-20140402_072947-g4c9edc2"
-                  :exclusions [hiccup org.clojure/tools.reader
-                               compojure ring/ring-core commons-codec
-                               com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator"}}
-                 [org.vlacs/navigator "0.1.0-20140421_052127-gf2b3b75"
-                  :exclusions [com.datomic/datomic-free]]
+                 [org.vlacs/navigator "0.1.0-20140421_052127-gf2b3b75"]
                  [http-kit "2.1.16"]
                  #_[ring "1.2.1"]
                  [liberator "0.11.0"]
@@ -31,7 +26,7 @@
 
   :profiles {:voom {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}
              :dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]
-                                  [com.datomic/datomic-free "0.9.4699"
+                                  [com.datomic/datomic-free "0.9.4707"
                                    :exclusions [commons-codec]]
                                   [org.clojure/test.check "0.5.7"]]
                    :source-paths ["dev"]}
