@@ -15,11 +15,12 @@
     :start-fn! nil
     :stop-fn! nil
     :helmsman-context "nil"
-    :helmsman-definition nil}  
+    :helmsman-definition nil}
    {:app-name "Timber"
     :helmsman-definition timber/helmsman-assets}
    {:app-name "Navigator"
     :schema n-schema/schema
+    :helmsman-context "navigator"
     :helmsman-definition-db-conn true
     :helmsman-definition navigator/helmsman-def}
    {:app-name "Gangway"
