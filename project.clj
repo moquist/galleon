@@ -5,15 +5,15 @@
   :license {:name "TODO: Choose a license"
             :url "http://choosealicense.com/"}
   :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.2.4-20140428_060604-g4760845"]
+                 [org.vlacs/helmsman "0.2.5-20140505_122511-g1af41e7"]
                  [org.immutant/immutant "1.1.1"
                   :exclusions [org.clojure/core.memoize io.netty/netty org.hornetq/hornetq-core-client]]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
-                 [org.vlacs/timber "0.1.2-20140423_024315-g34c314d"]
+                 [org.vlacs/timber "0.1.7-20140506_033559-gae34e51"]
                  #_[org.immutant/immutant-messaging "1.1.1"
                   :exclusions [io.netty/netty]]
-                 ^{:voom {:repo "https://github.com/vlacs/navigator"}}
-                 [org.vlacs/navigator "0.1.0-20140421_052127-gf2b3b75"]
+                 ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "master"}}
+                 [org.vlacs/navigator "0.1.0-20140506_040417-g8eca734"]
                  [http-kit "2.1.16"]
                  #_[ring "1.2.1"]
                  [liberator "0.11.0"]
