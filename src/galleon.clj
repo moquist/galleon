@@ -71,7 +71,7 @@
           (vec (rest remaining-apps)))))
 
     (assoc-in system [:web-server :immutant]
-              (web/start galleon.applications/system-handler))))
+              (web/start (galleon.applications/system-handler (:db-conn system))))))
 
 (defn stop-system!
   [system]
