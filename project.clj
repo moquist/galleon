@@ -6,6 +6,7 @@
             :url "http://choosealicense.com/"}
   :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.5-20140505_122511-g1af41e7"]
+                 [org.vlacs/traveler "0.2.10" :exclusions [org.vlacs/helmsman]]
                  [org.immutant/immutant "1.1.1"
                   :exclusions [org.clojure/core.memoize io.netty/netty org.hornetq/hornetq-core-client]]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
@@ -23,6 +24,8 @@
 
   :pedantic? :warn ; :abort
   :immutant {:context-path "/"}
+
+  :plugins [[lein-immutant "1.2.1"]]
 
   :profiles {:voom {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}
              :dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]

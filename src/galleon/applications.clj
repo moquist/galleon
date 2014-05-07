@@ -6,7 +6,9 @@
             [gangway.web]
             [navigator.schema :as n-schema]
             [navigator]
-            [timber.core :as timber]))
+            [timber.core :as timber]
+            [traveler.core :as tr-core]
+            [traveler.schema :as tr-schema]))
 
 (def system-applications
   [#_
@@ -15,11 +17,17 @@
     :start-fn! nil
     :stop-fn! nil
     :helmsman-context "nil"
-    :helmsman-definition nil}  
+    :helmsman-definition nil}
    {:app-name "Timber"
     :helmsman-definition timber/helmsman-assets}
+   {:app-name "Traveler"
+    :schema tr-schema/traveler-schema
+    :helmsman-context "traveler"
+    :helmsman-definition-db-conn true
+    :helmsman-definition tr-core/helmsman-definition}
    {:app-name "Navigator"
     :schema n-schema/schema
+    :helmsman-context "navigator"
     :helmsman-definition-db-conn true
     :helmsman-definition navigator/helmsman-def}
    {:app-name "Gangway"
