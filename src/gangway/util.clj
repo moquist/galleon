@@ -9,7 +9,9 @@
 (def queues
   {:showevidence {:name "queue.showevidence-in"
                   ;; having a :worker-fn implies that galleon should start a listener
-                  :worker-fn gw-worker/do-work}})
+                  :worker-fn gw-worker/do-work}
+   :genius {:name "queue.genius-in"
+            :worker-fn gw-worker/do-work}})
 
 (defn start-queue! [system [k q]]
   (let [n (:name q)

@@ -4,10 +4,10 @@
             [navigator]))
 
 (def worker-dispatch
-  "Maps incoming 'operation' value with a function that implements
-   analagous operation via Korma db functions."
   {:assert
-   {:task navigator/task-in}})
+   {:task navigator/task-in
+   ;; :user2perf-asmt navigator/user2perf-asmt-in
+    }})
 
 (defn get-worker-fn [message]
   (let [header (:header message)
