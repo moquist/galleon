@@ -6,11 +6,18 @@
   (:require [ring.middleware.params :refer [wrap-params]]
             [liberator.core :refer [defresource]]
             [liberator.dev :refer [wrap-trace]]
-            [gangway.publish :as gw-publish]))
+            [gangway.publish :as gw-publish]
+            [gangway.worker :as gw-worker]))
 
 (defresource incoming!
   :allowed-methods [:post]
   :available-media-types ["text/plain"]
+  :malformed? (fn  [ctx]
+                (let [message (slurp (get-in ctx [:request :body]))]
+                  (if-not (gw-worker/valid-msg? message)
+                    true
+                    false)))
+  :handle-malformed (fn [ctx]  (prn (str "Malformed Gangway Message: " (slurp (get-in ctx [:request :body])))))
   :post! (fn incoming!- [ctx]
           (let [rp (get-in ctx [:request :route-params])
                 qid (keyword (:qid rp))]

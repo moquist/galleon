@@ -26,6 +26,19 @@
   (let [parsed-messages (json/read-str messages :key-fn keyword)]
     (doall (map (partial dispatch db-conn) parsed-messages))))
 
+(defn valid-msg?
+  "Evaluates given message string to determine if it's a valid Gangway message.
+   Initial validation confirms that message is a valid JSON string. Further validation
+   of data 'shape' is likely required."
+  [msg]
+  (let [valid-msg
+    (try
+      (let [parsed-msg (json/read-str msg :key-fn keyword)]
+        true)
+      (catch Exception e
+        (not true)))]
+    valid-msg))
+
 (comment
 
   (def messages
