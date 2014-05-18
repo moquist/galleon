@@ -2,44 +2,48 @@
   :description "Galleon is a library that ties together multiple web app libraries
                to turn them into a single cohesive application."
   :url "https://www.github.com/vlacs/galleon"
-  :license {:name "TODO: Choose a license"
-            :url "http://choosealicense.com/"}
-  :dependencies [^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.2.5"]
-                 [org.vlacs/traveler "0.2.10" :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
-                 #_[org.immutant/immutant "1.1.1"
-                  :exclusions [org.clojure/core.memoize io.netty/netty org.hornetq/hornetq-core-client]]
+  :license {:name "Eclipse Public License"
+            :url  "http://www.eclipse.org/legal/epl-v10.html"}
+
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/data.json "0.2.4"]
+
+                 ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
+                 [org.vlacs/helmsman "0.2.6" :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
+                 ^{:voom {:repo "https://github.com/vlacs/navigator"}}
+                 [org.vlacs/navigator "0.1.0-SNAPSHOT"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7"]
-                 #_[org.immutant/immutant-messaging "1.1.1"
-                  :exclusions [io.netty/netty]]
-                 ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "master"}}
-                 [org.vlacs/navigator "0.1.0-SNAPSHOT"]
-                 [http-kit "2.1.16"]
-                 #_[ring "1.2.1"]
-                 [liberator "0.11.0"]
+                 ^{:voom {:repo "https://github.com/vlacs/traveler"}}
+                 [org.vlacs/traveler "0.2.12"
+                  :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
+
+                 [bouncer "0.3.1-beta1"]
                  [clj-http "0.9.1"]
-                 [org.clojure/data.json "0.2.4"]
-                 [org.clojure/clojure "1.6.0"]]
+                 [liberator "0.11.0"]
+                 [org.immutant/immutant "1.1.1"
+                  :exclusions [io.netty/netty org.hornetq/hornetq-core-client]]]
 
   :pedantic? :warn ; :abort
   :immutant {:context-path "/"}
 
   :plugins [[lein-immutant "1.2.1"]]
 
-  :profiles {:voom {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}
-             :dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]
-                                  [com.datomic/datomic-free "0.9.4707"
-                                   :exclusions [commons-codec org.jgroups/jgroups org.jboss.logging/jboss-logging]]
-                                  [org.clojure/test.check "0.5.7"]]
-                   :source-paths ["dev"]}
-             :dev-pro {:dependencies [[org.clojure/tools.namespace "0.2.4"]
-                                      [com.datomic/datomic-free "0.9.4699"
-                                       :exclusions [commons-codec org.jgroups/jgroups org.jboss.logging/jboss-logging]]]
-                       :source-paths ["dev"]}
-             :production {:dependencies [[com.datomic/datomic-free "0.9.4699"
-                                          :exclusions [commons-codec org.jgroups/jgroups org.jboss.logging/jboss-logging]]]}
+  :profiles {:voom           {:plugins [[lein-voom "0.1.0-20140427_205301-g84cf30c"
+                                         :exclusions [org.clojure/clojure]]]}
+             :dev            {:dependencies [[org.clojure/tools.namespace "0.2.4"]
+                                             [com.datomic/datomic-free "0.9.4766"]
+                                             [org.clojure/test.check "0.5.7"]]
+                              :source-paths ["dev"]}
+             :dev-pro        {:repositories [["my.datomic.com" {:url "https://my.datomic.com/repo"
+                                                                :username :env/lein_datomic_repo_username
+                                                                :password :env/lein_datomic_repo_password}]]
+                              :dependencies [[org.clojure/tools.namespace "0.2.4"]
+                                             [com.datomic/datomic-pro "0.9.4766"]
+                                             [org.clojure/test.check "0.5.7"]]
+                              :source-paths ["dev"]}
+             :production     {:dependencies [[com.datomic/datomic-free "0.9.4766"]]}
              :production-pro {:repositories [["my.datomic.com" {:url "https://my.datomic.com/repo"
                                                                 :username :env/lein_datomic_repo_username
                                                                 :password :env/lein_datomic_repo_password}]]
-                              :dependencies [[com.datomic/datomic-pro "0.9.4556"]]}})
+                              :dependencies [[com.datomic/datomic-pro "0.9.4766"]]}})
