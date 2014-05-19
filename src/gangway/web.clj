@@ -7,16 +7,14 @@
             [liberator.core :refer [defresource]]
             [liberator.dev :refer [wrap-trace]]
             [gangway.publish :as gw-publish]
-            [gangway.worker :as gw-worker]))
+            [gangway.validation :as gw-validation]))
 
 (defresource incoming!
   :allowed-methods [:post]
   :available-media-types ["text/plain"]
   :malformed? (fn  [ctx]
                 (let [message (slurp (get-in ctx [:request :body]))]
-                  (if-not (gw-worker/valid-msg? message)
-                    true
-                    false)))
+                  (gw-validation/valid? message)))
   :handle-malformed (fn [ctx]  (prn (str "Malformed Gangway Message: " (slurp (get-in ctx [:request :body])))))
   :post! (fn incoming!- [ctx]
           (let [rp (get-in ctx [:request :route-params])

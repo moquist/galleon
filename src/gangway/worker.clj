@@ -1,5 +1,6 @@
 (ns gangway.worker
   (:require [clojure.data.json :as json]
+            [gangway.validation :refer [construct-data]]
             [immutant.messaging :as msg]
             [navigator]))
 
