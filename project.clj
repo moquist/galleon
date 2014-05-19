@@ -11,18 +11,17 @@
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6" :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator"}}
-                 [org.vlacs/navigator "0.1.0-SNAPSHOT"]
+                 [org.vlacs/navigator "0.1.2-SNAPSHOT"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7"]
                  ^{:voom {:repo "https://github.com/vlacs/traveler"}}
                  [org.vlacs/traveler "0.2.12"
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
 
-                 [bouncer "0.3.1-beta1"]
                  [clj-http "0.9.1"]
                  [liberator "0.11.0"]
                  [org.immutant/immutant "1.1.1"
-                  :exclusions [io.netty/netty org.hornetq/hornetq-core-client]]]
+                  :exclusions [org.hornetq/hornetq-core-client io.netty/netty]]]
 
   :pedantic? :warn ; :abort
   :immutant {:context-path "/"}
