@@ -1,8 +1,5 @@
 (ns user
-  (:require [immutant.util :refer [in-immutant?] :as util]
-            [immutant.dev :refer [reload-project!] :as dev]
-            [immutant.messaging :as msg]
-            [clojure.data.json :as json]
+  (:require [clojure.data.json :as json]
             [clojure.java.io :as io]
             [clojure.string :as str]
             [clojure.pprint :refer (pprint)]
@@ -23,14 +20,12 @@
    It makes you feel better."
   []
   (stop!)
-  (reload-project!)
   (start!))
 
 (defn reset-and-delete-db! [delete-db]
   (when (= :delete-db delete-db)
     (stop!)
     (d/delete-database (get-in galleon/system [:config :datomic-url]))
-    (reload-project!)
     (start!)))
 
 (defn touch-that
@@ -49,7 +44,7 @@
 (defn ptouch-that
   "Example: (ptouch-that '[:find ?e :where [?e :user/username]])"
   [query & data-sources]
-  (pprint (apply touch-that query data-sources))) 
+  (pprint (apply touch-that query data-sources)))
 
 (comment
   (navigator/create-competency (:db-conn galleon/system) "comp1" "v1" :comp.status/active)
