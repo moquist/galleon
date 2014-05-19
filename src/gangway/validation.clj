@@ -41,7 +41,7 @@
   Returns true or false."
   [msg]
   (if (valid-json? msg)
-    (let [parsed-msg (first (json/read-str msg :key-fn keyword))
+    (let [parsed-msg (json/read-str msg :key-fn keyword)
           header (:header parsed-msg)
           op (keyword (:operation header))
           entity-type (keyword (:entity-type header))
