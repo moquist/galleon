@@ -10,5 +10,7 @@
 (deftest remote-http-test
   (let [result (http/post
                 (format "%s/gangway/in/showevidence" (immutant.util/app-uri))
-                {:body (json/json-str {:a "b"})})]
-    (is (= 201 (:status result)))))
+                {:body (json/json-str {:a "b"})
+                 :throw-exceptions false})]
+    (testing "malformed handler"
+      (is (= 400 (:status result))))))
