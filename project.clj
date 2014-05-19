@@ -26,7 +26,8 @@
   :pedantic? :warn ; :abort
   :immutant {:context-path "/"}
 
-  :plugins [[lein-immutant "1.2.1"]]
+  :plugins [[lein-cloverage "1.0.2"]
+            [lein-immutant "1.2.1"]]
 
   :profiles {:voom           {:plugins [[lein-voom "0.1.0-20140427_205301-g84cf30c"
                                          :exclusions [org.clojure/clojure]]]}
