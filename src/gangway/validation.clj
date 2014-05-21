@@ -1,7 +1,7 @@
 (ns gangway.validation
   (:require [clojure.data.json :as json]
             [hatch]
-            [navigator.validation :as navigator]))
+            [navigator.validation :as nav-val]))
 
 (defn construct-data
   "Constructs a namespaced map out of an incoming json message"
@@ -17,12 +17,12 @@
 
 (def validation-dispatch
   {:assert
-   {:task           navigator/task-in
-    :comp           navigator/comp-in
-    :comp-tag       navigator/comp-tag-in
-    :perf-asmt      navigator/perf-asmt-in
-    :user2comp      navigator/user2comp-in
-    :user2perf-asmt navigator/user2perf-asmt-in}})
+   {:task           nav-val/task-in
+    :comp           nav-val/comp-in
+    :comp-tag       nav-val/comp-tag-in
+    :perf-asmt      nav-val/perf-asmt-in
+    :user2comp      nav-val/user2comp-in
+    :user2perf-asmt nav-val/user2perf-asmt-in}})
 
 ;;TODO: Not sure if this fn is needed
 (defn valid-json?
