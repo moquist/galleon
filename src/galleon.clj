@@ -7,7 +7,8 @@
             [clojure.edn]
             [gangway.util :as gw-util]
             [gangway.worker :as gw-worker]
-            [datomic-schematode.core :as schematode])
+            [datomic-schematode.core :as schematode]
+            [gangway.publish :as gw-publish])
   (:import (java.io File)))
 
 (def default-config-path "/etc/galleon.edn")
@@ -21,7 +22,8 @@
 
 (defn load-system-config
   [path]
-  {:datomic-url "datomic:mem://galleon-test"}
+  {:datomic-url "datomic:mem://galleon-test"
+   :publish-fn gw-publish/publish!}
   #_(if (file-exists? path)
     (clojure.edn/read-string (slurp path))
     (throw (Exception. (str "Config file missing: " path)))))
