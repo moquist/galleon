@@ -35,8 +35,9 @@
       [{:header {:operation :assert
                  :entity-id {:task-id 17}
                  :entity-type :task}
-        :payload {:entity {:name "tie shoes (together)"
+        :payload {:entity {:id-sk-origin "se"
+                           :name "tie shoes (together)"
                            :version "v3"
-                           :competency-parents [1 2 3]}}}])
+                           :description "this is a description"}}}])
      :key-fn keyword))
   )

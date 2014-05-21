@@ -24,6 +24,7 @@
     :user2comp      navigator/user2comp-in
     :user2perf-asmt navigator/user2perf-asmt-in}})
 
+;;TODO: Not sure if this fn is needed
 (defn valid-json?
   "Evaluates given message string to determine if it's valid JSON.
   Returns true or false."
@@ -40,15 +41,20 @@
   "Runs a validation function to check if a message is valid.
   Returns true or false."
   [msg]
-  (if (valid-json? msg)
-    (let [parsed-msg (json/read-str msg :key-fn keyword)
-          header (:header parsed-msg)
-          op (keyword (:operation header))
-          entity-type (keyword (:entity-type header))
-          validation-fn (get-in validation-dispatch [op entity-type])]
-      (if (nil? validation-fn)
+  (let [header (:header msg)
+        op (keyword (:operation header))
+        entity-type (keyword (:entity-type header))
+        validation-fn (get-in validation-dispatch [op entity-type])]
+    (if (nil? validation-fn)
+      true
+      (if (nil? (first (validation-fn (construct-data msg))))
         true
-        (if (nil? (first (validation-fn (construct-data parsed-msg))))
-          true
-          false)))
-    false))
+        false))))
+
+(defn valid-batch?
+  "Runs valid? on a batch of json messages"
+  [messages]
+  (let [parsed-messages (json/read-str messages :key-fn keyword)]
+    (if (some false? (doall (map (partial valid?) parsed-messages)))
+      false
+      true)))

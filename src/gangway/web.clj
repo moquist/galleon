@@ -14,7 +14,7 @@
   :available-media-types ["text/plain"]
   :malformed? (fn  [ctx]
                 (let [message (slurp (get-in ctx [:request :body]))]
-                  (not (gw-validation/valid? message))))
+                  (not (gw-validation/valid-batch? message))))
   :handle-malformed (fn [ctx]  (prn (str "Malformed Gangway Message: " (slurp (get-in ctx [:request :body])))))
   :post! (fn incoming!- [ctx]
           (let [rp (get-in ctx [:request :route-params])
