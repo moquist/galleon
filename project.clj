@@ -24,7 +24,10 @@
                   :exclusions [org.hornetq/hornetq-core-client io.netty/netty]]]
 
   :pedantic? :warn ; :abort
-  :immutant {:context-path "/"}
+
+  :immutant {:init galleon/init
+             :resolve-dependencies true
+             :context-path "/"}
 
   :plugins [[lein-cloverage "1.0.2"]
             [lein-immutant "1.2.1"]]

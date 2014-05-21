@@ -89,6 +89,10 @@
           (last remaining-apps)
           (vec (butlast remaining-apps)))))))
 
+(defn init
+  []
+  (alter-var-root #'system start-system!))
+
 ;;; We can't use this anymore. Should we even keep it?
 #_(defn -main [& args]
     (alter-var-root #'*read-eval* (constantly false))
