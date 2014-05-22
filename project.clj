@@ -10,7 +10,7 @@
 
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6" :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
-                 ^{:voom {:repo "https://github.com/vlacs/navigator"}}
+                 ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "master"}}
                  [org.vlacs/navigator "0.1.2-SNAPSHOT"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7"]
