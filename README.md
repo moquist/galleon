@@ -7,12 +7,12 @@ Galleon will be VLACS' competencies-centric education tracking system.
 Dev/Test Workflow
 =======
 
+1. Clone this repo, and ```cd``` into the repo directory.
 1. Get immutant if you don't have it yet.
-    1. Add ```[lein-immutant "1.2.0"]``` to your ```~/.lein/profiles.clj``` file.
-    1. Run ```lein immutant install```.
-1. Add ```[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]``` to your
+    1. Run ```lein immutant install```. (The immutant plugin dep is in ```project.clj```.)
+1. Add ```[lein-voom "0.1.0-20140520_203433-gc1e2883" :exclusions [org.clojure/clojure]]``` to your
    ```:plugins``` in ```~/.lein/profiles.clj```. For example, this should work:
-   ```{:user {:plugins [[lein-voom "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]]}}```
+   ```{:user {:plugins [[lein-voom "0.1.0-20140520_203433-gc1e2883" :exclusions [org.clojure/clojure]]]}}```
     1. Run ```lein voom freshen``` to get the latest commits for helmsman, dossier, etc.
     1. Run ```lein voom build-deps``` to pull and build those dependencies and install them in your ~/.m2/ tree.
     1. COMMENT OUT the lein-voom dep in your ~/.lein/profiles.clj file, because
