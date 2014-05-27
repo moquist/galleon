@@ -20,13 +20,12 @@
   (if
     (.isFile (File. path)) true false))
 
-(defn load-system-config
-  [path]
-  {:datomic-url "datomic:mem://galleon-test"
-   :publish-fn gw-publish/publish!}
-  #_(if (file-exists? path)
-    (clojure.edn/read-string (slurp path))
-    (throw (Exception. (str "Config file missing: " path)))))
+(defn load-system-config []
+  (let [path "aspire-conf.edn"]
+    (if (file-exists? path)
+      (assoc (clojure.edn/read-string (slurp path))
+        :publish-fn gw-publish/publish!)
+      (throw (Exception. (str "Config file missing: " path))))))
 
 (defn init-schema!
   "Combines schematode schema and transacts it in."
@@ -56,7 +55,7 @@
   [_] ;; TODO: handle incoming system here?
   (let [apps galleon.applications/system-applications
         system (init-system!
-                (load-system-config "to/some/path") ;; TODO: Make this configurable.
+                (load-system-config)
                  apps)]
 
     ;;; Lets get some app-magic started, shall we?
