@@ -33,7 +33,10 @@
    {:app-name "Gangway"
     :start-fn! gw-util/start-queues!
     :helmsman-context "gangway"
-    :helmsman-definition gangway.web/helmsman-definition}])
+    :helmsman-definition gangway.web/helmsman-definition}
+   #_
+   {:app-name "Flare: Notifier"
+    :start-fn! nil}])
 
 (defn make-app-context
   [db-conn app]
