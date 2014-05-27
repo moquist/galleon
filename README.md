@@ -15,6 +15,8 @@ Dev/Test Workflow
    ```{:user {:plugins [[lein-voom "0.1.0-20140520_203433-gc1e2883" :exclusions [org.clojure/clojure]]]}}```
     1. Run ```lein voom freshen``` to get the latest commits for helmsman, dossier, etc.
     1. Run ```lein voom build-deps``` to pull and build those dependencies and install them in your ~/.m2/ tree.
+1. ```cp aspire-conf-dist.edn aspire-conf.edn```
+1. Edit ```aspire-conf.edn``` as necessary.
 1. Deploy galleon to immutant: ```lein immutant deploy```
 1. Start up immutant in another terminal with ```lein immutant run```. Watch for the nREPL connection port for your deployment of galleon, though immutant sets .nrepl-port in your project root dir correctly so this isn't essential.
     1. Connect from the CLI: ```lein repl :connect``` (automatically uses .nrepl-port)
