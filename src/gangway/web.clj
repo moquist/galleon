@@ -3,7 +3,8 @@
        endpoints for data entering or leaving Galleon. Nothing from
        outside enters or leaves Galleon except by the Gangway."}
   gangway.web
-  (:require [ring.middleware.params :refer [wrap-params]]
+  (:require [clojure.pprint :refer [pprint]]
+            [ring.middleware.params :refer [wrap-params]]
             [liberator.core :refer [defresource]]
             [liberator.dev :refer [wrap-trace]]
             [gangway.publish :as gw-publish]
@@ -15,7 +16,10 @@
   :malformed? (fn  [ctx]
                 (let [message (slurp (get-in ctx [:request :body]))]
                   (not (gw-validation/valid-batch? message))))
-  :handle-malformed (fn [ctx]  (prn (str "Malformed Gangway Message: " (slurp (get-in ctx [:request :body])))))
+  :handle-malformed (fn [ctx]  (do
+                                 (prn "----- Malformed Gangway Message -----")
+                                 (pprint (slurp (get-in ctx [:request :body])))
+                                 (prn "--- End Malformed Gangway Message ---")))
   :post! (fn incoming!- [ctx]
           (let [rp (get-in ctx [:request :route-params])
                 qid (keyword (:qid rp))]

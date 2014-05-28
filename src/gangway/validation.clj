@@ -24,7 +24,6 @@
     :user2comp      nav-val/user2comp-in
     :user2perf-asmt nav-val/user2perf-asmt-in}})
 
-;;TODO: Not sure if this fn is needed
 (defn valid-json?
   "Evaluates given message string to determine if it's valid JSON.
   Returns true or false."
@@ -54,7 +53,9 @@
 (defn valid-batch?
   "Runs valid? on a batch of json messages"
   [messages]
-  (let [parsed-messages (json/read-str messages :key-fn keyword)]
-    (if (some false? (doall (map (partial valid?) parsed-messages)))
-      false
-      true)))
+  (if (not (valid-json? messages))
+    false
+    (let [parsed-messages (json/read-str messages :key-fn keyword)]
+      (if (some false? (doall (map (partial valid?) parsed-messages)))
+        false
+        true))))
