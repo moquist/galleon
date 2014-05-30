@@ -29,7 +29,8 @@
 (deftest remote-http-test-malformed
   (let [result (http/post
                 (format "%s/gangway/in/showevidence" (immutant.util/app-uri))
-                {:body invalid-message
+                {:headers {"Authorization" "Token T0_V&(1AZ#U1$X3EXQL@K!OJ568G4&3DL55!5MU16E#E6TY%KV!3O1QB&L2!QSXT"}
+                 :body invalid-message
                  :throw-exceptions false})]
     (testing "malformed request (missing a required field)"
       (is (= 400 (:status result))))))
@@ -37,7 +38,25 @@
 (deftest remote-http-test-success
   (let [result (http/post
                 (format "%s/gangway/in/showevidence" (immutant.util/app-uri))
-                {:body valid-message
+                {:headers {"Authorization" "Token T0_V&(1AZ#U1$X3EXQL@K!OJ568G4&3DL55!5MU16E#E6TY%KV!3O1QB&L2!QSXT"}
+                 :body valid-message
                  :throw-exceptions false})]
     (testing "successful request"
       (is (= 201 (:status result))))))
+
+(deftest remote-http-test-authentication-incorrect-token
+  (let [result (http/post
+                (format "%s/gangway/in/showevidence" (immutant.util/app-uri))
+                {:headers {"Authorization" "Token thistokenisinvalid"}
+                 :body valid-message
+                 :throw-exceptions false})]
+    (testing "incorrect authentication token"
+      (is (= 401 (:status result))))))
+
+(deftest remote-http-test-authentication-no-header
+  (let [result (http/post
+                (format "%s/gangway/in/showevidence" (immutant.util/app-uri))
+                {:body valid-message
+                 :throw-exceptions false})]
+    (testing "authentication token missing from header"
+      (is (= 401 (:status result))))))
