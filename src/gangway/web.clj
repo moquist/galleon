@@ -8,11 +8,15 @@
             [liberator.core :refer [defresource]]
             [liberator.dev :refer [wrap-trace]]
             [gangway.publish :as gw-publish]
-            [gangway.validation :as gw-validation]))
+            [gangway.validation :as gw-validation]
+            [gangway.auth :as auth]))
 
 (defresource incoming!
   :allowed-methods [:post]
   :available-media-types ["text/plain"]
+  :authorized? (fn [ctx]
+                 (auth/validate-token ctx))
+  :handle-unauthorized "You are not authorized to access this resource."
   :malformed? (fn  [ctx]
                 (let [message (slurp (get-in ctx [:request :body]))]
                   (not (gw-validation/valid-batch? message))))
