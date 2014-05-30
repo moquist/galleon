@@ -12,9 +12,10 @@
   (let [auth (get-in ctx [:request :headers "authorization"])]
     (if (nil? auth)
       (str "")
-      (second (split
-           (get-in ctx [:request :headers "authorization"])
-           #"\s+")))))
+      (let [split-auth (split auth #"\s+")]
+        (if (= (str "Token") (first split-auth))
+          (second split-auth)
+          (str ""))))))
 
 (defn gen-token
   "Generates a random token of a specified length consisting
