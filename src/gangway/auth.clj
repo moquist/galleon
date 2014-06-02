@@ -11,10 +11,10 @@
   "Checks expiration time of token against current time
 
   Params:  q-res - result of d/q
-           db    - Datomic database connection
+           db    - Datomic database value
   Returns: boolean"
   [q-res db]
-  (let [ent (d/entity (d/db db) (ffirst q-res))
+  (let [ent (d/entity db (ffirst q-res))
         expires (:queue-auth/expires ent)]
     (if (nil? expires)
       false
