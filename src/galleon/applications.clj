@@ -3,6 +3,7 @@
             [helmsman.uri :as h-uri]
             [helmsman.navigation :as h-nav]
             [gangway.util :as gw-util]
+            [gangway.schema :as gw-schema]
             [gangway.web]
             [navigator.schema :as n-schema]
             [navigator]
@@ -32,7 +33,9 @@
     :helmsman-definition navigator/helmsman-def}
    {:app-name "Gangway"
     :start-fn! gw-util/start-queues!
+    :schema gw-schema/gangway-schema
     :helmsman-context "gangway"
+    :helmsman-definition-db-conn true
     :helmsman-definition gangway.web/helmsman-definition}
    #_
    {:app-name "Flare: Notifier"
