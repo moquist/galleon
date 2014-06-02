@@ -9,13 +9,13 @@
                  [org.clojure/data.json "0.2.4"]
 
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.2.6" :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
+                 [org.vlacs/helmsman "0.2.6-20140508_004555-g5275ae2" :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "master"}}
-                 [org.vlacs/navigator "0.1.2-SNAPSHOT"]
+                 [org.vlacs/navigator "0.1.2-20140519_033110-gc9bf75d"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
-                 [org.vlacs/timber "0.1.7"]
+                 [org.vlacs/timber "0.1.7-20140528_142627-g4123c12"]
                  ^{:voom {:repo "https://github.com/vlacs/traveler"}}
-                 [org.vlacs/traveler "0.2.12"
+                 [org.vlacs/traveler "0.2.12-20140528_142742-g6a6427a"
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
 
                  [clj-http "0.9.1"]
