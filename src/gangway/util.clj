@@ -21,16 +21,15 @@
       (msg/listen n (partial worker-fn (:db-conn system))))))
 
 
-(defn start-queues!
 ;; TODO: handle exceptions
-;; TODO: why aren't our queues in system?
-  ([system] (start-queues! system queues))
-  ([system queues]
-     (dorun (map (partial start-queue! system) queues))
-     (let [path [:gangway :queues]]
-       (assoc-in system path
-                 (set (concat (get-in system path)
-                              (keys queues)))))))
+(defn start-queues!
+  [system]
+  (let [queues (:queues system)]
+    (dorun (map (partial start-queue! system) queues))
+    (let [path [:gangway :queues]]
+      (assoc-in system path
+                (set (concat (get-in system path)
+                             (keys queues)))))))
 
 (defn stop-queues!
 ;; TODO: handle exceptions
