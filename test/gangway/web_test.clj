@@ -4,8 +4,12 @@
             [immutant.messaging :as msg]
             [immutant.util]
             [clojure.data.json :as json]
+            [galleon]
+            [gangway.auth :as gw-auth]
             [gangway.util :as gw-util]
             [gangway.web :as gw-web]))
+
+(def token (:token (gw-auth/add-queue-token! "Testing" 3 (:db-conn galleon/system))))
 
 (def invalid-message
   (json/json-str
@@ -29,7 +33,7 @@
 (deftest remote-http-test-malformed
   (let [result (http/post
                 (format "%s/gangway/in/showevidence" (immutant.util/app-uri))
-                {:headers {"Authorization" "Token T0_V&(1AZ#U1$X3EXQL@K!OJ568G4&3DL55!5MU16E#E6TY%KV!3O1QB&L2!QSXT"}
+                {:headers {"Authorization" (format "Token %s" token)}
                  :body invalid-message
                  :throw-exceptions false})]
     (testing "malformed request (missing a required field)"
@@ -38,7 +42,7 @@
 (deftest remote-http-test-success
   (let [result (http/post
                 (format "%s/gangway/in/showevidence" (immutant.util/app-uri))
-                {:headers {"Authorization" "Token T0_V&(1AZ#U1$X3EXQL@K!OJ568G4&3DL55!5MU16E#E6TY%KV!3O1QB&L2!QSXT"}
+                {:headers {"Authorization" (format "Token %s" token)}
                  :body valid-message
                  :throw-exceptions false})]
     (testing "successful request"
@@ -47,7 +51,7 @@
 (deftest remote-http-test-authentication-incorrect-token
   (let [result (http/post
                 (format "%s/gangway/in/showevidence" (immutant.util/app-uri))
-                {:headers {"Authorization" "Token thistokenisinvalid"}
+                {:headers {"Authorization" "Token thisisnotavalidtoken"}
                  :body valid-message
                  :throw-exceptions false})]
     (testing "incorrect authentication token"
