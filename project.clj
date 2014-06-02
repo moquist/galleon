@@ -19,6 +19,7 @@
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
 
                  [clj-http "0.9.1"]
+                 [clj-time "0.7.0"]
                  [liberator "0.11.0"]
                  [org.immutant/immutant "1.1.1"
                   :exclusions [org.hornetq/hornetq-core-client io.netty/netty]]]
