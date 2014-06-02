@@ -7,6 +7,7 @@
             [clojure.test :as test]
             [datomic.api :as d]
             [galleon]
+            [gangway.auth :as gw-auth]
             [navigator]))
 
 (defn stop! []
@@ -45,6 +46,13 @@
   "Example: (ptouch-that '[:find ?e :where [?e :user/username]])"
   [query & data-sources]
   (pprint (apply touch-that query data-sources)))
+
+(defn add-queue-token!
+  "Add a token to use the queues, takes an owner as a string
+   and an exipration time expressed in the number of months from
+   the current time as an int"
+  [owner expire]
+  (pprint (gw-auth/add-queue-token! owner expire (:db-conn galleon/system))))
 
 (comment
   (navigator/create-competency (:db-conn galleon/system) "comp1" "v1" :comp.status/active)
