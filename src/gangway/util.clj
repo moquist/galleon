@@ -7,10 +7,10 @@
 ;; Before this question can be answered, must figure out how outgoing
 ;; queues would be presented via REST.
 (def queues
-  {:showevidence {:name "queue.showevidence-in"
+  {:showevidence {:name "gangway/queue.showevidence-in"
                   ;; having a :worker-fn implies that galleon should start a listener
                   :worker-fn gw-worker/do-work}
-   :genius {:name "queue.genius-in"
+   :genius {:name "gangway/queue.genius-in"
             :worker-fn gw-worker/do-work}})
 
 (defn start-queue! [system [k q]]
@@ -25,6 +25,7 @@
 (defn start-queues!
   [system]
   (let [queues (:queues system)]
+    ;; todo: update to process all apps' queues
     (dorun (map (partial start-queue! system) queues))
     (let [path [:gangway :queues]]
       (assoc-in system path
