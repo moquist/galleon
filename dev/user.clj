@@ -57,5 +57,7 @@
 (comment
   (navigator/create-competency (:db-conn galleon/system) "comp1" "v1" :comp.status/active)
   (ptouch-that '[:find ?e :where [?e :comp/name]])
+  
+  ;; curl -i -X POST -H 'Authorization: Token H^(nChldGx-FxHDNiq@H#tdtnisL2Tb#1O8GNFp_%hIEoUOy_3rQpA00b69Pa!Ot' -H "Content-Type: application/json" -d '[{"header":{"entity-id":{"task-id ":18},"entity-type ":"task "},"payload ":{"entity ":{"name ":"flarp (slowly) ","version ":"I am a yeepyeepyeepyeep! version string ","competency-parents ":[4,8,3]}}}]' http://localhost:8197/gangway/in/showevidence"
   )
 
