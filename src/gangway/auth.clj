@@ -62,26 +62,25 @@
     (schema/tx-entity! db :queue-auth (hatch/slam-all queue-auth :queue-auth))
     queue-auth))
 
-
 (defn validate-token
   "Validates a token from an incoming request,
   designed to be used in the authorized? section
   of a liberator resource.
 
   Params:  ctx - Liberator Context
-  db  - Datomic database connection
+  db-conn  - Datomic database connection
   Returns: boolean"
-  [ctx db]
+  [ctx db-conn]
   (let [token  (request->auth-token ctx)]
-    (if (not (empty? token))
-      (let [result (d/q '[:find ?e
+    (if (empty? token)
+      false
+      (let [db (d/db db-conn)
+            result (d/q '[:find ?e
                           :in $ ?token
                           :where [?e :queue-auth/token ?token]]
-                        (d/db db)
+                        db
                         token)]
-        (if (empty? result)
+        (if (or (empty? result)
+                (expired? result db))
           false
-          (if (expired? result db)
-            false
-            true)))
-      false)))
+          true)))))
