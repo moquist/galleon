@@ -26,3 +26,20 @@ Dev/Test Workflow
     1. ```(reset)``` will reload your code without deleting the Datomic database.
     1. ```(reset-and-delete-db! :delete-db)``` will reload your code AND DELETE THE DATOMIC DATABASE.
 1. See REPL-code examples in ```(comment ...)``` in ```dev/user.clj```.
+
+## Using the queues
+The queues in the gangway namespace use token based authentication, so you must include an Authorization header with your HTTP request.
+
+``` Authorization: Token thisiswhereyourtokengoes ```
+
+In order your requests to go through you must generate a token for yourself.
+Theres a handy function for this available from the repl in the user namespace.
+
+Fire up the application, then connect to it with your REPL, once connected you
+should be able to run:
+
+``` user=> (add-queue-token! "Owner Name" 3) ```
+
+The 3 in the above command represents the number of months before the token expires.
+
+Once you have your token you can send JSON requests to any of the queue endpoints.
