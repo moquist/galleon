@@ -53,13 +53,13 @@
   "Add a token to use the queues, takes an owner as a string
    and an exipration time expressed in the number of months from
    the current time as an int"
-  [owner expire db]
-  (let [expiration (.toDate (t/plus (t/now) (t/months expire)))
+  [owner months-to-expiry db-conn]
+  (let [expiration (.toDate (t/plus (t/now) (t/months months-to-expiry)))
         token      (gen-token 64)
         queue-auth {:token token
                     :owner owner
                     :expires expiration}]
-    (schema/tx-entity! db :queue-auth (hatch/slam-all queue-auth :queue-auth))
+    (schema/tx-entity! db-conn :queue-auth (hatch/slam-all queue-auth :queue-auth))
     queue-auth))
 
 (defn validate-token
