@@ -9,7 +9,10 @@
             [navigator]
             [timber.core :as timber]
             [traveler.core :as tr-core]
-            [traveler.schema :as tr-schema]))
+            [traveler.schema :as tr-schema]
+            [flare.util]
+            [flare.schema]
+            [flare.web]))
 
 (def system-applications
   [#_
@@ -31,6 +34,11 @@
     :helmsman-context "navigator"
     :helmsman-definition-db-conn true
     :helmsman-definition navigator/helmsman-def}
+   {:app-name "Flare"
+    :start-fn! flare.util/get-queues
+    :schema flare.schema/schema
+    :helmsman-context "flare"
+    :helmsman-definition flare.web/helmsman-definition}
    {:app-name "Gangway"
     :start-fn! gw-util/start-queues!
     :schema gw-schema/gangway-schema

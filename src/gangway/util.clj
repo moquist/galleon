@@ -34,7 +34,6 @@
 (defn start-queues!
   [system]
   (let [queues (:queues system)]
-    ;; todo: update to process all apps' queues
     (dorun (map (partial start-queue! system) queues))
     (let [path [:gangway :queues]]
       (assoc-in system path

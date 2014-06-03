@@ -17,6 +17,8 @@
                  ^{:voom {:repo "https://github.com/vlacs/traveler"}}
                  [org.vlacs/traveler "0.2.12-20140528_142742-g6a6427a"
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
+                 ^{:voom {:repo "https://github.com/vlacs/flare" :branch "master"}}
+                 [org.vlacs/flare "0.1.0-20140603_183328-g1dbeb05"]
 
                  [clj-http "0.9.1"]
                  [clj-time "0.7.0"]
