@@ -57,23 +57,20 @@
   (let [apps galleon.applications/system-applications
         system (init-system!
                 (load-system-config)
-                 apps)]
-
-    ;;; Lets get some app-magic started, shall we?
-    (loop [system-startup-state system
-           app (first apps)
-           remaining-apps (vec (rest apps))]
-      (if (nil? app)
-        system-startup-state
-        (recur
-          (if-let [start-fn! (:start-fn! app nil)]
-            (start-fn! system-startup-state)
-            system-startup-state)
-          (first remaining-apps)
-          (vec (rest remaining-apps)))))
-
+                 apps)
+        system (loop [system-startup-state system
+                      app (first apps)
+                      remaining-apps (vec (rest apps))]
+                 (if (nil? app)
+                   system-startup-state
+                   (recur
+                    (if-let [start-fn! (:start-fn! app nil)]
+                      (start-fn! system-startup-state)
+                      system-startup-state)
+                    (first remaining-apps)
+                    (vec (rest remaining-apps)))))]
     (assoc-in system [:web-server :immutant]
-              (web/start (galleon.applications/system-handler (:db-conn system))))))
+              (web/start (galleon.applications/system-handler system)))))
 
 (defn stop-system!
   [system]
