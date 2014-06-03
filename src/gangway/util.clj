@@ -31,24 +31,29 @@
     (when worker-fn
       (msg/listen n (partial worker-fn (:db-conn system))))))
 
+(defn queue-definitions [qid]
+  (let [n (name qid)]
+    {:in {:name (str "queue.in." n)
+          :worker gangway.worker/do-work}
+     :out {:name (str "queue.out." n)
+           :worker gangway.disembark/disembark!}}))
 
 ;; TODO: handle exceptions
-(defn start-queues!
-  [system]
-  (let [queues (:queues system)]
+(defn start-queues! [system]
+  (let [qids (get-in system [:flare :queues])
+        queues (reduce (fn start-queues!- [c v]
+                         (assoc c v (queue-definitions v)))
+                       {} qids)]
+    #_
     (dorun (map (partial start-queue! system) queues))
-    (let [path [:gangway :queues]]
-      (assoc-in system path
-                (set (concat (get-in system path)
-                             (keys queues)))))))
+    (assoc-in system [:gangway :queues] queues)))
 
-(defn stop-queues!
 ;; TODO: handle exceptions
-  ([system] (stop-queues! system queues))
-  ([system queues]
-     (dorun
-      (map (fn stop-queues!- [k]
-             (let [q (queues k)]
-               (msg/stop (:name q))))
-           (get-in system [:gangway :queues])))
-     (assoc-in system [:gangway :queues] #{})))
+(defn stop-queues! [system] 
+  (let [queues (get-in system [:gangway :queues])]
+    (dorun
+     (map (fn stop-queues!- [k]
+            (let [q (queues k)]
+              (msg/stop (:name q))))
+          (get-in system [:gangway :queues]))))
+  (assoc-in system [:gangway :queues] {}))
