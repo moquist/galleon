@@ -1,3 +1,3 @@
 (ns gangway.disembark)
 
-(defn disembark! [msg])
+(defn disembark! [& _])
