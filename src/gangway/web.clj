@@ -11,31 +11,33 @@
             [gangway.validation :as gw-validation]
             [gangway.auth :as auth]))
 
-(defn liberator-resources
-  [db-conn]
-  {:incoming! (resource :allowed-methods [:post]
-                        :available-media-types ["text/plain"]
-                        :authorized? (fn [ctx]
-                                       (auth/validate-token ctx db-conn))
-                        :handle-unauthorized "You are not authorized to access this resource."
-                        :malformed? (fn  [ctx]
-                                      (let [message (slurp (get-in ctx [:request :body]))]
-                                        (not (gw-validation/valid-batch? message))))
-                        :handle-malformed (fn [ctx]  (do
-                                                       (prn "----- Malformed Gangway Message -----")
-                                                       (pprint (slurp (get-in ctx [:request :body])))
-                                                       (prn "--- End Malformed Gangway Message ---")))
-                        :post! (fn incoming!- [ctx]
-                                 (let [rp (get-in ctx [:request :route-params])
-                                       qid (keyword (:qid rp))]
-                                   (gw-enqueue/enqueue! qid (slurp (get-in ctx [:request :body]))))))
+(defn liberator-resources [system]
+  (let [db-conn (:db-conn system)]
+    {:incoming! (resource :allowed-methods [:post]
+                          :available-media-types ["text/plain"]
+                          :authorized? (fn [ctx]
+                                         (auth/validate-token ctx db-conn))
+                          :handle-unauthorized "You are not authorized to access this resource."
+                          :malformed? (fn  [ctx]
+                                        (let [message (slurp (get-in ctx [:request :body]))]
+                                          (not (gw-validation/valid-batch? message))))
+                          :handle-malformed (fn [ctx]  (do
+                                                         ;; TODO: make these go somewhere better
+                                                         (prn "----- Malformed Gangway Message -----")
+                                                         (pprint (slurp (get-in ctx [:request :body])))
+                                                         (prn "--- End Malformed Gangway Message ---")))
+                          :post! (fn incoming!- [ctx]
+                                   (let [rp (get-in ctx [:request :route-params])
+                                         qid (keyword (:qid rp))
+                                         n (get-in [:gangway :queues qid :in :name])]
+                                     (gw-enqueue/enqueue! n (slurp (get-in ctx [:request :body]))))))
 
-   :hi-there  (resource :available-media-types ["text/plain"]
-                        :handle-ok (fn [_] "hi there"))})
+     :hi-there  (resource :available-media-types ["text/plain"]
+                          :handle-ok (fn [_] "hi there"))}))
 
 (defn helmsman-definition
-  [db-conn]
-  [[:post "/in/:qid" (:incoming! (liberator-resources db-conn))]
-   [:get "/out" (:hi-there (liberator-resources db-conn))]
+  [system]
+  [[:post "/in/:qid" (:incoming! (liberator-resources system))]
+   [:get "/out" (:hi-there (liberator-resources system))]
    [wrap-params]
    [wrap-trace :header :ui]])
