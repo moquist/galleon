@@ -1,6 +1,7 @@
 (ns gangway.util
   (:require [immutant.messaging :as msg]
-            [gangway.worker :as gw-worker]))
+            [gangway.worker]
+            [gangway.disembark]))
 
 ;; TODO: Figure out how to support incoming and outgoing queues with
 ;; the same key in a reasonable way.
@@ -15,12 +16,13 @@
    {:name "genius"
     :in-fn g-blah}])
 
+#_
 (def queues
   {:showevidence {:name "queue.showevidence-in"
                   ;; having a :worker-fn implies that galleon should start a listener
-                  :worker-fn gw-worker/do-work}
+                  :worker-fn gangway.worker/do-work}
    :genius {:name "queue.genius-in"
-            :worker-fn gw-worker/do-work}})
+            :worker-fn gangway.worker/do-work}})
 
 (defn start-queue! [system [k q]]
   (let [n (:name q)

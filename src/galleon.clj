@@ -5,7 +5,6 @@
             [galleon.cli]
             [datomic.api :as d]
             [clojure.edn]
-            [gangway.util :as gw-util]
             [gangway.worker :as gw-worker]
             [datomic-schematode.core :as schematode]
             [gangway.enqueue :as gw-enqueue])
@@ -43,7 +42,6 @@
         db-create-rval (d/create-database datomic-uri)
         db-conn (d/connect datomic-uri)
         system {:db-conn db-conn
-                :queues gw-util/queues
                 :config config-map}]
     (init-schema! db-conn applications)
     (doseq [app applications]
