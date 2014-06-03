@@ -29,7 +29,7 @@
                           :post! (fn incoming!- [ctx]
                                    (let [rp (get-in ctx [:request :route-params])
                                          qid (keyword (:qid rp))
-                                         n (get-in [:gangway :queues qid :in :name])]
+                                         n (get-in system [:gangway :queues qid :in :name])]
                                      (gw-enqueue/enqueue! n (slurp (get-in ctx [:request :body]))))))
 
      :hi-there  (resource :available-media-types ["text/plain"]
