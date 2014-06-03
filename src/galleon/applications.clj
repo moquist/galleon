@@ -27,12 +27,10 @@
    {:app-name "Traveler"
     :schema tr-schema/traveler-schema
     :helmsman-context "traveler"
-    :helmsman-definition-db-conn true
     :helmsman-definition tr-core/helmsman-definition}
    {:app-name "Navigator"
     :schema n-schema/schema
     :helmsman-context "navigator"
-    :helmsman-definition-db-conn true
     :helmsman-definition navigator/helmsman-def}
    {:app-name "Flare"
     :start-fn! flare.util/get-queues
@@ -40,22 +38,19 @@
     :helmsman-context "flare"
     :helmsman-definition flare.web/helmsman-definition}
    {:app-name "Gangway"
-    :start-fn! gw-util/start-queues!
-    :schema gw-schema/gangway-schema
+    :start-fn! gangway.util/start-queues!
+    :schema gangway.schema/gangway-schema
     :helmsman-context "gangway"
-    :helmsman-definition-db-conn true
     :helmsman-definition gangway.web/helmsman-definition}
    #_
    {:app-name "Flare: Notifier"
     :start-fn! nil}])
 
 (defn make-app-context
-  [db-conn app]
+  [system app]
   (let [hd (:helmsman-definition app)]
     (into [:context (:helmsman-context app "/")]
-          (if (:helmsman-definition-db-conn app)
-            (hd db-conn)
-            hd))))
+          (hd system))))
 
 (defn front-page-handler
   [request]
@@ -67,11 +62,11 @@
     :user-menu nil
     :page-content "Hello world."}))
 
-(defn helmsman-definition [db-conn]
+(defn helmsman-definition [system]
   (into
    [[:get "/" front-page-handler]]
-   (map (partial make-app-context db-conn) system-applications)))
+   (map (partial make-app-context system) system-applications)))
 
-(defn system-handler [db-conn]
-  (helmsman/compile-routes (helmsman-definition db-conn)))
+(defn system-handler [system]
+  (helmsman/compile-routes (helmsman-definition system)))
 
