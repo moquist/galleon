@@ -1,8 +1,6 @@
 (ns gangway.enqueue
-  (:require [immutant.messaging :as msg]
-            [gangway.util :as gw-util]))
+  (:require [immutant.messaging :as msg]))
 
-(defn enqueue! [qid message]
-  (let [qn (get-in gw-util/queues [qid :name])]
-    (msg/publish qn message)))
+(defn enqueue! [qn message]
+  (msg/publish qn message))
 
