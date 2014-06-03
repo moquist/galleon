@@ -6,11 +6,20 @@
 ;; the same key in a reasonable way.
 ;; Before this question can be answered, must figure out how outgoing
 ;; queues would be presented via REST.
+
+#_
+(def queues-v2
+  [{:name "showevidence"
+    :in-fn blah
+    :out-fn blah}
+   {:name "genius"
+    :in-fn g-blah}])
+
 (def queues
-  {:showevidence {:name "gangway/queue.showevidence-in"
+  {:showevidence {:name "queue.showevidence-in"
                   ;; having a :worker-fn implies that galleon should start a listener
                   :worker-fn gw-worker/do-work}
-   :genius {:name "gangway/queue.genius-in"
+   :genius {:name "queue.genius-in"
             :worker-fn gw-worker/do-work}})
 
 (defn start-queue! [system [k q]]

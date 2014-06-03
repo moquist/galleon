@@ -8,7 +8,7 @@
             [gangway.util :as gw-util]
             [gangway.worker :as gw-worker]
             [datomic-schematode.core :as schematode]
-            [gangway.publish :as gw-publish])
+            [gangway.enqueue :as gw-enqueue])
   (:import (java.io File)))
 
 (def default-config-path "/etc/galleon.edn")
@@ -24,7 +24,7 @@
   (let [path "aspire-conf.edn"]
     (if (file-exists? path)
       (assoc (clojure.edn/read-string (slurp path))
-        :publish-fn gw-publish/publish!)
+        :enqueue-fn gw-enqueue/enqueue!)
       (throw (Exception. (str "Config file missing: " path))))))
 
 (defn init-schema!
@@ -43,7 +43,7 @@
         db-create-rval (d/create-database datomic-uri)
         db-conn (d/connect datomic-uri)
         system {:db-conn db-conn
-                :queues {:gangway gw-util/queues}
+                :queues gw-util/queues
                 :config config-map}]
     (init-schema! db-conn applications)
     (doseq [app applications]

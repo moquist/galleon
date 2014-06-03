@@ -7,7 +7,7 @@
             [ring.middleware.params :refer [wrap-params]]
             [liberator.core :refer [resource]]
             [liberator.dev :refer [wrap-trace]]
-            [gangway.publish :as gw-publish]
+            [gangway.enqueue :as gw-enqueue]
             [gangway.validation :as gw-validation]
             [gangway.auth :as auth]))
 
@@ -28,7 +28,7 @@
                         :post! (fn incoming!- [ctx]
                                  (let [rp (get-in ctx [:request :route-params])
                                        qid (keyword (:qid rp))]
-                                   (gw-publish/publish! qid (slurp (get-in ctx [:request :body]))))))
+                                   (gw-enqueue/enqueue! qid (slurp (get-in ctx [:request :body]))))))
 
    :hi-there  (resource :available-media-types ["text/plain"]
                         :handle-ok (fn [_] "hi there"))})
