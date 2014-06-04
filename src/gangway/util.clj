@@ -7,7 +7,7 @@
   (msg/start n)
   (msg/listen n (partial worker system)))
 
-(defn queue-definitions [qid]
+(defn attache->queues [qid]
   (let [n (name qid)]
     {:in {:name (str "queue.in." n)
           :worker gangway.worker/do-work}
@@ -16,10 +16,10 @@
 
 ;; TODO: handle exceptions
 (defn start-queues! [system]
-  (let [qids (get-in system [:flare :attaches])
+  (let [attaches (get-in system [:flare :attaches])
         queues (reduce (fn start-queues!- [c v]
-                         (assoc c v (queue-definitions v)))
-                       {} qids)
+                         (assoc c v (attache->queues v)))
+                       {} attaches)
         qs (flatten (for [qsys queues] (vals (second qsys))))]
     (dorun (map (partial start-queue! system) qs))
     (assoc-in system [:gangway :queues] queues)))
