@@ -33,7 +33,7 @@
     :helmsman-context "navigator"
     :helmsman-definition navigator/helmsman-def}
    {:app-name "Flare"
-    :start-fn! flare.util/get-queues
+    :start-fn! flare.util/get-attaches
     :schema flare.schema/schema
     :helmsman-context "flare"
     :helmsman-definition flare.web/helmsman-definition}
