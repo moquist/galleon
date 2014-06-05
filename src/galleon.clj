@@ -13,11 +13,8 @@
 (def default-config-path "/etc/galleon.edn")
 (def system nil)
 
-(defn file-exists?
-  [path]
-  (prn path)
-  (if
-    (.isFile (File. path)) true false))
+(defn file-exists? [path]
+  (if (.isFile (File. path)) true false))
 
 (defn load-system-config []
   (let [path "aspire-conf.edn"]
