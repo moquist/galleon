@@ -7,12 +7,12 @@
   (msg/start n)
   (msg/listen n (partial worker system)))
 
-(defn attache->queues [qid]
-  (let [n (name qid)]
+(defn attache->queues [attache]
+  (let [n (name attache)]
     {:in {:name (str "queue.in." n)
-          :worker gangway.worker/do-work}
+          :worker (partial gangway.worker/do-work attache)}
      :out {:name (str "queue.out." n)
-           :worker gangway.disembark/disembark!}}))
+           :worker (partial gangway.disembark/disembark! attache)}}))
 
 ;; TODO: handle exceptions
 (defn start-queues! [system]
@@ -33,3 +33,8 @@
               (msg/stop (:name q))))
           (get-in system [:gangway :queues]))))
   (assoc-in system [:gangway :queues] {}))
+
+(comment
+  (gangway.enqueue/enqueue! "queue.out.genius" {:hello "there"})
+
+  )

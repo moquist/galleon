@@ -23,7 +23,7 @@
   (let [wf (get-worker-fn message)]
     ((get-worker-fn message) db-conn (construct-data message))))
 
-(defn do-work [system messages]
+(defn do-work [attache system messages]
   (let [db-conn (:db-conn system)]
     (let [parsed-messages (json/read-str messages :key-fn keyword)]
       (doall (map (partial dispatch db-conn) parsed-messages)))))
