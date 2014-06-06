@@ -10,7 +10,6 @@
             [gangway.enqueue :as gw-enqueue])
   (:import (java.io File)))
 
-(def default-config-path "/etc/galleon.edn")
 (def system nil)
 
 (defn file-exists? [path]
