@@ -1,4 +1,0 @@
-{:web-server
- {:jetty {:port 3456
-          :join? false}}
- :datomic-connection-url "datomic:mem://database-name-here"}
