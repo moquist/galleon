@@ -30,15 +30,25 @@
 
 (comment
 
+  (def message-v2
+    (json/read-str
+     (json/write-str
+      {:operation :assert
+       :entity-type :task
+       :entity {:id-sk-origin "Show Evidence"
+                :name "tie shoes (together)"
+                :version "v3"
+                :description "this is a mighty fine description"}})))
+
   (def messages
     (json/read-str
      (json/json-str
-      [{:header {:operation :assert
+      {:header {:operation :assert
                  :entity-id {:task-id 17}
                  :entity-type :task}
         :payload {:entity {:id-sk-origin "se"
                            :name "tie shoes (together)"
                            :version "v3"
-                           :description "this is a description"}}}])
+                           :description "this is a description"}}})
      :key-fn keyword))
   )
