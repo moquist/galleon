@@ -38,7 +38,7 @@
   :profiles {:voom           {:plugins [[lein-voom "0.1.0-20140427_205301-g84cf30c"
                                          :exclusions [org.clojure/clojure]]]}
              :dev            {:dependencies [[org.clojure/tools.namespace "0.2.4"]
-                                             [com.datomic/datomic-free "0.9.4766"]
+                                             [com.datomic/datomic-free "0.9.4766.11"]
                                              [org.clojure/test.check "0.5.7"]]
                               :source-paths ["dev"]}
              :dev-pro        {:repositories [["my.datomic.com" {:url "https://my.datomic.com/repo"
