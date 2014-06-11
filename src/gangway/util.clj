@@ -14,6 +14,17 @@
      :out {:name (str "queue.out." n)
            :worker (partial gangway.disembark/disembark! attache)}}))
 
+;; example of structure in system
+#_
+{:showevidence {:in {:name "queue.in.showevidence"
+                     :worker gangway.worker/do-work}
+                :out {:name "queue.out.showevidence"
+                      :worker gangway.disembark/disembark!}}
+ :moodle {:in {:name "queue.in.moodle"
+               :worker gangway.worker/do-work}
+          :out {:name "queue.out.moodle"
+                :worker gangway.disembark/disembark!}}}
+
 ;; TODO: handle exceptions
 (defn start-queues! [system]
   (let [attaches (get-in system [:flare :attaches])
