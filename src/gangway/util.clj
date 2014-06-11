@@ -32,7 +32,7 @@
                          (assoc c v (attache->queues v)))
                        {} attaches)
         qs (flatten (for [qsys queues] (vals (second qsys))))]
-    (dorun (map (partial start-queue! system) qs))
+    (doseq (map (partial start-queue! system) qs))
     (assoc-in system [:gangway :queues] queues)))
 
 ;; TODO: handle exceptions
