@@ -6,7 +6,7 @@
             [datomic.api :as d]
             [clojure.edn]
             [gangway.worker :as gw-worker]
-            [datomic-schematode.core :as schematode]
+            [datomic-schematode :as dst]
             [gangway.enqueue :as gw-enqueue])
   (:import (java.io File)))
 
@@ -25,8 +25,8 @@
 (defn init-schema!
   "Combines schematode schema and transacts it in."
   [db-conn applications]
-  (schematode/init-schematode-constraints! db-conn)
-  (schematode/load-schema! db-conn
+  (dst/init-schematode-constraints! db-conn)
+  (dst/load-schema! db-conn
                            (reduce (fn combine-schemas- [schema app] (concat schema (:schema app)))
                                    []
                                    applications)))
