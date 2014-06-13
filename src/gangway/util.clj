@@ -1,7 +1,8 @@
 (ns gangway.util
   (:require [immutant.messaging :as msg]
             [gangway.worker]
-            [gangway.disembark]))
+            [gangway.disembark]
+            [gangway.enqueue]))
 
 (defn start-queue! [system {n :name worker :worker}]
   (msg/start n)
@@ -27,13 +28,21 @@
 
 ;; TODO: handle exceptions
 (defn start-queues! [system]
-  (let [attaches (get-in system [:flare :attaches])
+  (let [attaches (get-in system [:attaches :endpoints])
         queues (reduce (fn start-queues!- [c v]
                          (assoc c v (attache->queues v)))
                        {} attaches)
         qs (flatten (for [qsys queues] (vals (second qsys))))]
     (doseq [q qs] (start-queue! system q))
-    (assoc-in system [:gangway :queues] queues)))
+    (-> system
+        (assoc-in [:gangway :queues] queues)
+        (assoc-in [:attaches :outgoing-fns]
+                  (into {}
+                        (map (fn [i]
+                               (let [n (get-in (second i) [:in :name])]
+                                 [(first i)
+                                  (partial gangway.enqueue/enqueue! n)]))
+                             queues))))))
 
 ;; TODO: handle exceptions
 (defn stop-queues! [system] 

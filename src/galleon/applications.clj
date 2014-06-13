@@ -11,9 +11,8 @@
             [timber.core :as timber]
             [traveler.core :as tr-core]
             [traveler.schema :as tr-schema]
-            [flare.util]
-            [flare.schema]
-            [flare.web]))
+            [flare]))
+
 
 (def system-applications
   [#_
@@ -25,6 +24,9 @@
     :helmsman-definition nil}
    {:app-name "Timber"
     :helmsman-definition timber/helmsman-assets}
+   {:app-name "Flare"
+    :start-fn! flare/configure!
+    :schema flare/schema}
    {:app-name "Traveler"
     :schema tr-schema/traveler-schema
     :helmsman-context "traveler"
@@ -37,40 +39,34 @@
     :schema o-schema/schema
     :helmsman-context "oarlock"
     :helmsman-definition (fn [_] [])}
-   {:app-name "Flare"
-    :start-fn! flare.util/get-attaches
-    :schema flare.schema/schema
-    :helmsman-context "flare"
-    :helmsman-definition flare.web/helmsman-definition}
    {:app-name "Gangway"
     :start-fn! gangway.util/start-queues!
     :schema gangway.schema/gangway-schema
     :helmsman-context "gangway"
     :helmsman-definition gangway.web/helmsman-definition}
-   #_
-   {:app-name "Flare: Notifier"
-    :start-fn! nil}])
+   {:app-name "Flare notifier"
+    :start-fn! flare/start!}])
 
 (defn make-app-context
   [system app]
-  (let [hd (:helmsman-definition app)]
+  (when-let [hd (:helmsman-definition app)]
     (into [:context (:helmsman-context app "/")]
           (hd system))))
 
 (defn front-page-handler
   [request]
   (timber/base-page
-   {:page-name "Galleon"
-    :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
-    :user-name "Test User Name"
-    :main-menu nil
-    :user-menu nil
-    :page-content "Hello world."}))
+    {:page-name "Galleon"
+     :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
+     :user-name "Test User Name"
+     :main-menu nil
+     :user-menu nil
+     :page-content "Hello world."}))
 
 (defn helmsman-definition [system]
   (into
-   [[:get "/" front-page-handler]]
-   (map (partial make-app-context system) system-applications)))
+    [[:get "/" front-page-handler]]
+    (map (partial make-app-context system) system-applications)))
 
 (defn system-handler [system]
   (helmsman/compile-routes (helmsman-definition system)))

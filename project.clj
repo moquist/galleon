@@ -7,6 +7,7 @@
 
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/data.json "0.2.4"]
+                 [com.taoensso/timbre "3.2.1"]
 
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6-20140508_004555-g5275ae2" :exclusions [org.eclipse.jetty.orbit/javax.servlet com.taoensso/timbre]]
@@ -17,10 +18,10 @@
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7-20140603_205620-gd255b55"]
                  ^{:voom {:repo "https://github.com/vlacs/traveler"}}
-                 [org.vlacs/traveler "0.2.12-20140611_205736-g9cb11df"
+                 [org.vlacs/traveler "0.2.12-20140612_170357-g6e12d7c"
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
                  ^{:voom {:repo "https://github.com/vlacs/flare" :branch "master"}}
-                 [org.vlacs/flare "0.1.0-20140611_193435-g9b0656e"]
+                 [org.vlacs/flare "0.1.0-20140613_194112-g4579ec0"]
 
                  [clj-http "0.9.1"]
                  [clj-time "0.7.0"]
