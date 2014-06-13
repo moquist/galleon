@@ -7,7 +7,9 @@
             [clojure.edn]
             [gangway.worker :as gw-worker]
             [datomic-schematode :as dst]
-            [gangway.enqueue :as gw-enqueue])
+            [gangway.enqueue :as gw-enqueue]
+            [attache]
+            )
   (:import (java.io File)))
 
 (def system nil)
@@ -19,7 +21,9 @@
   (let [path "aspire-conf.edn"]
     (if (file-exists? path)
       (assoc (clojure.edn/read-string (slurp path))
-        :enqueue-fn gw-enqueue/enqueue!)
+             :enqueue-fn gw-enqueue/enqueue!
+             :attaches {:endpoints attache/endpoints
+                        :transforms attache/transformations})
       (throw (Exception. (str "Config file missing: " path))))))
 
 (defn init-schema!
