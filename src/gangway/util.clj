@@ -28,7 +28,7 @@
 
 ;; TODO: handle exceptions
 (defn start-queues! [system]
-  (let [attaches (get-in system [:flare :attaches])
+  (let [attaches (get-in system [:attaches :endpoints])
         queues (reduce (fn start-queues!- [c v]
                          (assoc c v (attache->queues v)))
                        {} attaches)
@@ -36,7 +36,7 @@
     (doseq [q qs] (start-queue! system q))
     (-> system
         (assoc-in [:gangway :queues] queues)
-        (assoc-in [:flare :outgoing-fns]
+        (assoc-in [:attaches :outgoing-fns]
                   (into {}
                         (map (fn [i]
                                (let [n (get-in (second i) [:in :name])]

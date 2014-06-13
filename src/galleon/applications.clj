@@ -12,6 +12,7 @@
             [traveler.schema :as tr-schema]
             [flare]))
 
+
 (def system-applications
   [#_
    {:app-name "Poopdeck(tm)"
@@ -53,14 +54,14 @@
     {:page-name "Galleon"
      :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
      :user-name "Test User Name"
-    :main-menu nil
-    :user-menu nil
-    :page-content "Hello world."}))
+     :main-menu nil
+     :user-menu nil
+     :page-content "Hello world."}))
 
 (defn helmsman-definition [system]
   (into
-   [[:get "/" front-page-handler]]
-   (map (partial make-app-context system) system-applications)))
+    [[:get "/" front-page-handler]]
+    (map (partial make-app-context system) system-applications)))
 
 (defn system-handler [system]
   (helmsman/compile-routes (helmsman-definition system)))

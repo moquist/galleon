@@ -1,5 +1,6 @@
 (ns galleon
   (:require [immutant.web :as web]
+            [taoensso.timbre :as timbre]
             [helmsman]
             [galleon.applications]
             [galleon.cli]
@@ -14,6 +15,52 @@
 
 (def system nil)
 
+(def default-logging-options
+ {
+  ;; Prefer `level-atom` to in-config level when possible:
+  ;; :current-logging-level :debug
+
+  ;;; Control log filtering by namespace patterns (e.g. ["my-app.*"]).
+  ;;; Useful for turning off logging in noisy libraries, etc.
+  :ns-whitelist []
+  :ns-blacklist []
+
+  ;; Fns (applied right-to-left) to transform/filter appender fn args.
+  ;; Useful for obfuscating credentials, pattern filtering, etc.
+  :middleware []
+
+  ;;; Control :timestamp format
+  :timestamp-pattern "yyyy-MMM-dd HH:mm:ss ZZ" ; SimpleDateFormat pattern
+  :timestamp-locale  nil ; A Locale object, or nil
+
+  ;; Output formatter used by built-in appenders. Custom appenders may (but are
+  ;; not required to use) its output (:output). Extra per-appender opts can be
+  ;; supplied as an optional second (map) arg.
+  :fmt-output-fn (fn [{:keys [level ns message args]}]
+                   (str
+                     "["
+                     (clojure.string/upper-case (name level))
+                     "] (" ns ") - " message " "
+                     (if (> (count args) 1) (pr-str (rest args)) "")))
+
+  :shared-appender-config {} ; Provided to all appenders via :ap-config key
+  :appenders
+  {:standard-out
+   {:doc "Prints to *out*/*err*. Enabled by default."
+    :min-level nil :enabled? true :async? false :rate-limit nil
+    :fn (fn [{:keys [error? output]}] ; Can use any appender args
+          (binding [*out* (if error? *err* *out*)]
+            (println output)))}
+
+   :spit
+   {:doc "Spits to `(:spit-filename :shared-appender-config)` file."
+    :min-level nil :enabled? false :async? false :rate-limit nil
+    :fn (fn [{:keys [ap-config output]}] ; Can use any appender args
+          (when-let [filename (:spit-filename ap-config)]
+            (try (spit filename (str output "\n") :append true)
+                 (catch java.io.IOException _))))}}})
+ 
+
 (defn file-exists? [path]
   (if (.isFile (File. path)) true false))
 
@@ -22,8 +69,7 @@
     (if (file-exists? path)
       (assoc (clojure.edn/read-string (slurp path))
              :enqueue-fn gw-enqueue/enqueue!
-             :attaches {:endpoints attache/endpoints
-                        :transforms attache/transformations})
+             )
       (throw (Exception. (str "Config file missing: " path))))))
 
 (defn init-schema!
@@ -42,7 +88,9 @@
         db-create-rval (d/create-database datomic-uri)
         db-conn (d/connect datomic-uri)
         system {:db-conn db-conn
-                :config config-map}]
+                :config config-map
+                :attaches {:endpoints attache/endpoints
+                           :transforms attache/transformations}}]
     (init-schema! db-conn applications)
     (doseq [app applications]
       (when (fn? (:init-fn! app))
@@ -52,6 +100,8 @@
 ;;; TODO: Give reduce a try instead of (l)oop-recur.
 (defn start-system!
   [_] ;; TODO: handle incoming system here?
+  (timbre/merge-config! default-logging-options)
+  (timbre/debug "Galleon starting up...")
   (let [apps galleon.applications/system-applications
         system (init-system!
                 (load-system-config)
@@ -63,10 +113,13 @@
                    system-startup-state
                    (recur
                     (if-let [start-fn! (:start-fn! app nil)]
-                      (start-fn! system-startup-state)
+                      (do
+                        (timbre/debug "Starting sub-system: " (:app-name app))
+                        (start-fn! system-startup-state))
                       system-startup-state)
                     (first remaining-apps)
                     (vec (rest remaining-apps)))))]
+    (timbre/debug "Starting immutant web server...")
     (assoc-in system [:web-server :immutant]
               (web/start (galleon.applications/system-handler system)))))
 
@@ -89,13 +142,4 @@
 (defn init
   []
   (alter-var-root #'system start-system!))
-
-;;; We can't use this anymore. Should we even keep it?
-#_(defn -main [& args]
-    (alter-var-root #'*read-eval* (constantly false))
-    (start-system!
-      (let [opts (galleon.cli/get-opts args)]
-        (start-system!
-          (:config opts default-config-path))))
-    1)
 
