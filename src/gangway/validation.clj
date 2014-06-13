@@ -17,12 +17,14 @@
 
 (def validation-dispatch
   {:assert
-   {:task           nav-val/task-in
-    :comp           nav-val/comp-in
-    :comp-tag       nav-val/comp-tag-in
-    :perf-asmt      nav-val/perf-asmt-in
-    :user2comp      nav-val/user2comp-in
-    :user2perf-asmt nav-val/user2perf-asmt-in}})
+   {
+    ;;;:task           nav-val/task-in
+    ;;;:comp           nav-val/comp-in
+    ;;;:comp-tag       nav-val/comp-tag-in
+    ;;;:perf-asmt      nav-val/perf-asmt-in
+    ;;;:user2comp      nav-val/user2comp-in
+    ;;;:user2perf-asmt nav-val/user2perf-asmt-in
+    }})
 
 (defn valid-json?
   "Evaluates given message string to determine if it's valid JSON.

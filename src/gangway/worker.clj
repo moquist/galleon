@@ -6,12 +6,14 @@
 
 (def worker-dispatch
   {:assert
-   {:task           navigator/task-in
-    :comp           navigator/comp-in
-    :comp-tag       navigator/comp-tag-in
-    :perf-asmt      navigator/perf-asmt-in
-    :user2comp      navigator/user2comp-in
-    :user2perf-asmt navigator/user2perf-asmt-in}})
+   {
+    ;;;:task           navigator/task-in
+    ;;;:comp           navigator/comp-in
+    ;;;:comp-tag       navigator/comp-tag-in
+    ;;;:perf-asmt      navigator/perf-asmt-in
+    ;;;:user2comp      navigator/user2comp-in
+    ;;;:user2perf-asmt navigator/user2perf-asmt-in
+    }})
 
 (defn get-worker-fn [message]
   (let [header (:header message)
