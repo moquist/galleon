@@ -7,6 +7,7 @@
             [gangway.web]
             [navigator.schema :as n-schema]
             [navigator]
+            [oarlock.schema :as o-schema]
             [timber.core :as timber]
             [traveler.core :as tr-core]
             [traveler.schema :as tr-schema]
@@ -32,6 +33,10 @@
     :schema n-schema/schema
     :helmsman-context "navigator"
     :helmsman-definition navigator/helmsman-def}
+   {:app-name "Oarlock"
+    :schema o-schema/schema
+    :helmsman-context "oarlock"
+    :helmsman-definition (fn [_] [])}
    {:app-name "Flare"
     :start-fn! flare.util/get-attaches
     :schema flare.schema/schema
