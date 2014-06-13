@@ -24,6 +24,9 @@
     :helmsman-definition nil}
    {:app-name "Timber"
     :helmsman-definition timber/helmsman-assets}
+   {:app-name "Flare"
+    :start-fn! flare/configure!
+    :schema flare.schema/schema}
    {:app-name "Traveler"
     :schema tr-schema/traveler-schema
     :helmsman-context "traveler"
@@ -32,19 +35,13 @@
     :schema n-schema/schema
     :helmsman-context "navigator"
     :helmsman-definition navigator/helmsman-def}
-   {:app-name "Flare"
-    :start-fn! flare.util/get-attaches
-    :schema flare.schema/schema
-    :helmsman-context "flare"
-    :helmsman-definition flare.web/helmsman-definition}
    {:app-name "Gangway"
     :start-fn! gangway.util/start-queues!
     :schema gangway.schema/gangway-schema
     :helmsman-context "gangway"
     :helmsman-definition gangway.web/helmsman-definition}
-   #_
-   {:app-name "Flare: Notifier"
-    :start-fn! nil}])
+   {:app-name "Flare notifier"
+    :start-fn! flare/start!}])
 
 (defn make-app-context
   [system app]

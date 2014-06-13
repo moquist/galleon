@@ -11,14 +11,14 @@
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6-20140508_004555-g5275ae2" :exclusions [org.eclipse.jetty.orbit/javax.servlet com.taoensso/timbre]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "master"}}
-                 [org.vlacs/navigator "0.1.2-20140611_203430-gd226d1c"]
+                 [org.vlacs/navigator "0.1.3-20140613_134010-g1159395"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7-20140603_205620-gd255b55"]
                  ^{:voom {:repo "https://github.com/vlacs/traveler"}}
-                 [org.vlacs/traveler "0.2.12-20140611_205736-g9cb11df"
+                 [org.vlacs/traveler "0.2.12-20140612_170357-g6e12d7c"
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
-                 ^{:voom {:repo "https://github.com/vlacs/flare" :branch "master"}}
-                 [org.vlacs/flare "0.1.0-20140611_211503-g6785208"]
+                 ^{:voom {:repo "https://github.com/vlacs/flare" :branch "development"}}
+                 [org.vlacs/flare "0.1.0-20140613_170235-gfa74943"]
 
                  [clj-http "0.9.1"]
                  [clj-time "0.7.0"]
