@@ -1,5 +1,6 @@
 (ns galleon
   (:require [immutant.web :as web]
+            [clojure.tools.logging]
             [taoensso.timbre :as timbre]
             [helmsman]
             [galleon.applications]
@@ -38,19 +39,17 @@
   ;; supplied as an optional second (map) arg.
   :fmt-output-fn (fn [{:keys [level ns message args]}]
                    (str
-                     "["
-                     (clojure.string/upper-case (name level))
-                     "] (" ns ") - " message " "
-                     (if (> (count args) 1) (pr-str (rest args)) "")))
+                     message
+                     (if (> (count args) 1) (str " " (pr-str (rest args))) "")))
 
   :shared-appender-config {} ; Provided to all appenders via :ap-config key
   :appenders
   {:standard-out
    {:doc "Prints to *out*/*err*. Enabled by default."
     :min-level nil :enabled? true :async? false :rate-limit nil
-    :fn (fn [{:keys [error? output]}] ; Can use any appender args
-          (binding [*out* (if error? *err* *out*)]
-            (println output)))}
+    :fn (fn [{:keys [level ns output]}] ; Can use any appender args
+          (clojure.tools.logging/log ns level nil output)
+          )}
 
    :spit
    {:doc "Spits to `(:spit-filename :shared-appender-config)` file."

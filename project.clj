@@ -7,6 +7,8 @@
 
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/data.json "0.2.4"]
+
+                 [org.clojure/tools.logging "0.3.0"]
                  [com.taoensso/timbre "3.2.1"]
 
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
@@ -21,7 +23,7 @@
                  [org.vlacs/traveler "0.2.12-20140612_170357-g6e12d7c"
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
                  ^{:voom {:repo "https://github.com/vlacs/flare" :branch "master"}}
-                 [org.vlacs/flare "0.1.0-20140613_194112-g4579ec0"]
+                 [org.vlacs/flare "0.1.0-20140616_133736-g414d10b"]
 
                  [clj-http "0.9.1"]
                  [clj-time "0.7.0"]
