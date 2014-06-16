@@ -27,7 +27,7 @@
 (defn do-work [attache system message]
   (let [db-conn (:db-conn system)]
     (let [parsed-message (json/read-str message :key-fn keyword)]
-      (dispatch db-conn parsed-messages))))
+      (dispatch db-conn parsed-message))))
 
 (comment
 
