@@ -16,12 +16,23 @@
                (hatch/slam-all (get-in msg [:payload :entity]) (keyword entity-type))))
       (hatch/slam-all (get-in msg [:payload :entity]) (keyword entity-type)))))
 
-(def validation-dispatch
+(defn validator
+  [entity-type validation-map data]
+  (let [validation (entity-type validation-map)]
+    (if validation
+      (try
+        (s/validate
+         validation
+         data)
+        (catch Exception e (.getMessage e)))
+      data)))
+
+(def validation-maps
   {:assert
-   {:task           (partial oar-val/validator :task)
-    :perf-asmt      (partial oar-val/validator :perf-asmt)
-    :user2perf-asmt (partial oar-val/validator :user2perf-asmt)
-    :user2comp      (partial nav-val/validator :user2comp)}})
+   {:task           oar-val/validations
+    :perf-asmt      oar-val/validations
+    :user2perf-asmt oar-val/validations
+    :user2comp      nav-val/validations}})
 
 (defn valid-json?
   "Evaluates given message string to determine if it's valid JSON.
@@ -41,9 +52,10 @@
   [msg]
   (let [op (keyword (:operation msg))
         entity-type (keyword (:entity-type msg))
-        validation-fn (get-in validation-dispatch [op entity-type])]
-    (if (nil? validation-fn)
+        validation-map (get-in validation-maps [op entity-type])]
+    (if (nil? validation-map)
       true
-      (if (nil? (first (validation-fn (construct-data msg))))
+      ;;We need some new validation here
+      #_(if (nil? (first (validation-fn (construct-data msg))))
         true
         false))))
