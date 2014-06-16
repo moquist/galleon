@@ -14,16 +14,16 @@
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6-20140508_004555-g5275ae2" :exclusions [org.eclipse.jetty.orbit/javax.servlet com.taoensso/timbre]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "master"}}
-                 [org.vlacs/navigator "0.1.3-20140613_134010-g1159395"]
+                 [org.vlacs/navigator "0.1.3-20140616_164714-g08656ea" :exclusions [com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/oarlock"}}
-                 [org.vlacs/oarlock "0.1.0-20140612_192039-g5d88349"]
+                 [org.vlacs/oarlock "0.1.0-20140612_192039-g5d88349" :exclusions [com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7-20140603_205620-gd255b55"]
                  ^{:voom {:repo "https://github.com/vlacs/traveler"}}
                  [org.vlacs/traveler "0.2.12-20140612_170357-g6e12d7c"
-                  :exclusions [org.vlacs/helmsman org.vlacs/hatch]]
+                  :exclusions [org.vlacs/helmsman org.vlacs/hatch com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/flare" :branch "master"}}
-                 [org.vlacs/flare "0.1.0-20140616_133736-g414d10b"]
+                 [org.vlacs/flare "0.1.0-20140616_133736-g414d10b" :exclusions [com.datomic/datomic-free]]
 
                  [clj-http "0.9.1"]
                  [clj-time "0.7.0"]
