@@ -47,6 +47,7 @@
                                              [org.clojure/test.check "0.5.7"]]
                               :source-paths ["dev"]}
              :dev-pro        {:repositories [["my.datomic.com" {:url "https://my.datomic.com/repo"
+                                                                ;; N.B.: The env vars must be in ALL_CAPS or they WILL_NOT_WORK.
                                                                 :username :env/lein_datomic_repo_username
                                                                 :password :env/lein_datomic_repo_password}]]
                               :dependencies [[org.clojure/tools.namespace "0.2.4"]
