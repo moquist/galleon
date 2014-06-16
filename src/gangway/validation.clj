@@ -1,6 +1,7 @@
 (ns gangway.validation
   (:require [clojure.data.json :as json]
             [hatch]
+            [schema.core :as s]
             [navigator.validation :as nav-val]
             [oarlock.validation :as oar-val]))
 
