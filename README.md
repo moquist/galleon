@@ -27,6 +27,11 @@ Dev/Test Workflow
     1. ```(reset-and-delete-db! :delete-db)``` will reload your code AND DELETE THE DATOMIC DATABASE.
 1. See REPL-code examples in ```(comment ...)``` in ```dev/user.clj```.
 
+## Running tests
+You can build the necessary dependencies for galleon and run the tests at the same time.
+
+```$ ./test.sh```
+
 ## Using the queues
 The queues in the gangway namespace use token based authentication, so you must include an Authorization header with your HTTP request.
 
