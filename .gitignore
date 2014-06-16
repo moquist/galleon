@@ -15,4 +15,4 @@ resources/public/js*
 *#*#
 *.#*
 .descriptors*
-aspire-conf.edn
+galleon-conf.edn
