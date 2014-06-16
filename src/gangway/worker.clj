@@ -2,16 +2,17 @@
   (:require [clojure.data.json :as json]
             [gangway.validation :refer [construct-data]]
             [immutant.messaging :as msg]
-            [navigator]))
+            [navigator]
+            [oarlock]))
 
 (def worker-dispatch
   {:assert
-   {:task           navigator/task-in
+   {:task           oarlock/task-in
+    :perf-asmt      oarlock/perf-asmt-in
+    :user2perf-asmt oarlock/user2perf-asmt-in
     :comp           navigator/comp-in
     :comp-tag       navigator/comp-tag-in
-    :perf-asmt      navigator/perf-asmt-in
-    :user2comp      navigator/user2comp-in
-    :user2perf-asmt navigator/user2perf-asmt-in}})
+    :user2comp      navigator/user2comp-in}})
 
 (defn get-worker-fn [message]
   (let [header (:header message)
