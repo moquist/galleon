@@ -19,7 +19,8 @@
                                          (auth/validate-token ctx db-conn))
                           :handle-unauthorized "You are not authorized to access this resource."
                           :malformed? (fn  [ctx]
-                                        (let [message (slurp (get-in ctx [:request :body]))]
+                                        false
+                                        #_(let [message (slurp (get-in ctx [:request :body]))]
                                           (not (gw-validation/valid-batch? message))))
                           :handle-malformed (fn [ctx]  (do
                                                          ;; TODO: make these go somewhere better
