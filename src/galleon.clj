@@ -37,10 +37,8 @@
   ;; Output formatter used by built-in appenders. Custom appenders may (but are
   ;; not required to use) its output (:output). Extra per-appender opts can be
   ;; supplied as an optional second (map) arg.
-  :fmt-output-fn (fn [{:keys [level ns message args]}]
-                   (str
-                     message
-                     (if (> (count args) 1) (str " " (pr-str (rest args))) "")))
+  :fmt-output-fn (fn [{:keys [message]}]
+                   message)
 
   :shared-appender-config {} ; Provided to all appenders via :ap-config key
   :appenders
