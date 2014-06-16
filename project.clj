@@ -1,4 +1,4 @@
-(defproject org.vlacs/galleon "0.1.0"
+(defproject org.vlacs/galleon "0.1.1-SNAPSHOT"
   :description "Galleon is a library that ties together multiple web app libraries
                to turn them into a single cohesive application."
   :url "https://www.github.com/vlacs/galleon"
