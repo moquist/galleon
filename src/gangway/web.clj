@@ -38,7 +38,7 @@
 
 (defn helmsman-definition
   [system]
-  [[:post "/in/:qid/:id-sk"  (:incoming! (liberator-resources system))]
+  [[:post "/in/:qid/:id-sk-origin/:entity-type/:id-sk"  (:incoming! (liberator-resources system))]
    [:get "/out" (:hi-there (liberator-resources system))]
    [wrap-params]
    [wrap-trace :header :ui]])
