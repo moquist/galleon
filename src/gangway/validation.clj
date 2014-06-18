@@ -1,39 +1,34 @@
 (ns gangway.validation
   (:require [clojure.data.json :as json]
+            [clojure.pprint :refer [pprint]]
             [hatch]
             [schema.core :as s]
-            [navigator.validation :as nav-val]
             [oarlock.validation :as oar-val]))
 
 (defn construct-data
-  "Constructs a namespaced map out of an incoming json message"
-  [msg]
-  (let [entity-type (get-in msg [:header :entity-type])]
-    (if (get-in msg [:header :entity-id])
-      (let [id-key (keyword (str entity-type "-id"))
-            id-sk-key (keyword (str entity-type "/id-sk"))
-            id (str (get-in msg [:header :entity-id id-key]))]
-        (merge {id-sk-key id}
-               (hatch/slam-all (get-in msg [:payload :entity]) (keyword entity-type))))
-      (hatch/slam-all (get-in msg [:payload :entity]) (keyword entity-type)))))
+  "Combines route-params with incoming json message"
+  [msg rp]
+  (pprint msg)
+  (merge msg {:id-sk (:id-sk rp)
+              :id-sk-origin (keyword (:id-sk-origin rp))}))
 
 (defn validator
-  [entity-type validation-map data]
+  [validation-map entity-type data]
   (let [validation (entity-type validation-map)]
     (if validation
       (try
         (s/validate
          validation
          data)
-        (catch Exception e (.getMessage e)))
-      data)))
+        {:valid true :data data}
+        (catch Exception e {:valid false :error (.getMessage e)}))
+      {:valid true :data data})))
 
 (def validation-maps
   {:assert
    {:task           oar-val/validations
     :perf-asmt      oar-val/validations
-    :user2perf-asmt oar-val/validations
-    :user2comp      nav-val/validations}})
+    :user2perf-asmt oar-val/validations}})
 
 (defn valid-json?
   "Evaluates given message string to determine if it's valid JSON.
@@ -50,13 +45,19 @@
 (defn valid?
   "Runs a validation function to check if a message is valid.
   Returns true or false."
-  [msg]
-  (let [op (keyword (:operation msg))
-        entity-type (keyword (:entity-type msg))
+  [msg rp op]
+  (let [entity-type (keyword (:entity-type rp))
         validation-map (get-in validation-maps [op entity-type])]
-    (if (nil? validation-map)
-      true
-      ;;We need some new validation here
-      #_(if (nil? (first (validation-fn (construct-data msg))))
-        true
-        false))))
+    (if (valid-json? msg)
+      (let [parsed-msg (json/read-str msg :key-fn keyword)
+            data (construct-data parsed-msg rp)]
+        (if (nil? validation-map)
+          true
+          (validator validation-map entity-type data))))))
+
+(comment
+
+  (def msg {:name "flarp" :version "v2" :description "this is a description"})
+  (def rp {:id-sk "392" :id-sk-origin "showevidence" :entity-type "task" :qid "showevidence"})
+
+  )
