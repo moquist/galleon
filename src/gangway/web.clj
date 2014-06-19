@@ -14,31 +14,30 @@
 (defn liberator-resources [system]
   (let [db-conn (:db-conn system)]
     {:incoming! (resource :allowed-methods [:post]
-                          :available-media-types ["text/plain"]
+                          :available-media-types ["text/plain" "application/json"]
                           :authorized? (fn [ctx]
                                          (auth/validate-token ctx db-conn))
                           :handle-unauthorized "You are not authorized to access this resource."
-                          :malformed? (fn  [ctx]
-                                        false
-                                        #_(let [message (slurp (get-in ctx [:request :body]))]
-                                          (not (gw-validation/valid-batch? message))))
-                          :handle-malformed (fn [ctx]  (do
-                                                         ;; TODO: make these go somewhere better
-                                                         (prn "----- Malformed Gangway Message -----")
-                                                         (pprint (slurp (get-in ctx [:request :body])))
-                                                         (prn "--- End Malformed Gangway Message ---")))
+                          :malformed? (fn [ctx]
+                                        (let [message (slurp (get-in ctx [:request :body]))
+                                              route-params (get-in ctx [:request :route-params])
+                                              validated (gw-validation/valid? message route-params :assert)]
+                                          (if (:valid validated)
+                                            [false {::validated (:data  validated)}]
+                                            [true  {::malformed (:error validated)}])))
+                          :handle-malformed (fn [ctx] (str (::malformed ctx)))
                           :post! (fn incoming!- [ctx]
-                                   (let [rp (get-in ctx [:request :route-params])
+                                   (let [rp  (get-in ctx [:request :route-params])
                                          qid (keyword (:qid rp))
-                                         n (get-in system [:gangway :queues qid :in :name])]
-                                     (gw-enqueue/enqueue! n (slurp (get-in ctx [:request :body]))))))
+                                         n   (get-in system [:gangway :queues qid :in :name])]
+                                     (gw-enqueue/enqueue! n (::validated ctx)))))
 
      :hi-there  (resource :available-media-types ["text/plain"]
                           :handle-ok (fn [_] "hi there"))}))
 
 (defn helmsman-definition
   [system]
-  [[:post "/in/:qid/:id-sk"  (:incoming! (liberator-resources system))]
+  [[:post "/in/:qid/:id-sk-origin/:entity-type/:id-sk"  (:incoming! (liberator-resources system))]
    [:get "/out" (:hi-there (liberator-resources system))]
    [wrap-params]
    [wrap-trace :header :ui]])

@@ -9,10 +9,7 @@
   {:assert
    {:task           oarlock/task-in
     :perf-asmt      oarlock/perf-asmt-in
-    :user2perf-asmt oarlock/user2perf-asmt-in
-    :comp           navigator/comp-in
-    :comp-tag       navigator/comp-tag-in
-    :user2comp      navigator/user2comp-in}})
+    :user2perf-asmt oarlock/user2perf-asmt-in}})
 
 (defn get-worker-fn [message]
   (let [header (:header message)
