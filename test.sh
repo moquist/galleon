@@ -1,2 +1,4 @@
 #!/bin/bash
-lein do voom freshen, voom build-deps, immutant test
+lein voom freshen
+lein voom build-deps
+lein immutant test
