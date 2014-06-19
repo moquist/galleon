@@ -14,7 +14,7 @@
 (defn liberator-resources [system]
   (let [db-conn (:db-conn system)]
     {:incoming! (resource :allowed-methods [:post]
-                          :available-media-types ["text/plain"]
+                          :available-media-types ["text/plain" "application/json"]
                           :authorized? (fn [ctx]
                                          (auth/validate-token ctx db-conn))
                           :handle-unauthorized "You are not authorized to access this resource."
