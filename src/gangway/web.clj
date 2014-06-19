@@ -23,8 +23,8 @@
                                               route-params (get-in ctx [:request :route-params])
                                               validated (gw-validation/valid? message route-params :assert)]
                                           (if (:valid validated)
-                                            [true  {::validated (:data  validated)}]
-                                            [false {::malformed (:error validated)}])))
+                                            [false  {::validated (:data  validated)}]
+                                            [true {::malformed (:error validated)}])))
                           :handle-malformed (fn [ctx] (str (::malformed ctx)))
                           :post! (fn incoming!- [ctx]
                                    (let [rp  (get-in ctx [:request :route-params])
