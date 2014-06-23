@@ -9,7 +9,7 @@
   {:assert
    {:task           oarlock/task-in
     :perf-asmt      oarlock/perf-asmt-in
-    :user2perf-asmt oarlock/user2perf-asmt-in}})
+    :student2perf-asmt oarlock/student2perf-asmt-in}})
 
 (defn get-worker-fn [message]
   (let [header (:header message)

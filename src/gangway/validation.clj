@@ -28,7 +28,7 @@
   {:assert
    {:task           oar-val/validations
     :perf-asmt      oar-val/validations
-    :user2perf-asmt oar-val/validations}})
+    :student2perf-asmt oar-val/validations}})
 
 (defn valid-json?
   "Evaluates given message string to determine if it's valid JSON.
