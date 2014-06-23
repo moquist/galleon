@@ -15,8 +15,8 @@
                  [org.vlacs/helmsman "0.2.6-20140619_005947-gb4bb7d4" :exclusions [org.eclipse.jetty.orbit/javax.servlet com.taoensso/timbre]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "master"}}
                  [org.vlacs/navigator "0.1.3-20140619_181051-g4a0c99c" :exclusions [com.datomic/datomic-free]]
-                 ^{:voom {:repo "https://github.com/vlacs/oarlock" :branch "student"}}
-                 [org.vlacs/oarlock "0.1.0-20140623_203952-ga74f725" :exclusions [com.datomic/datomic-free]]
+                 ^{:voom {:repo "https://github.com/vlacs/oarlock" :branch "master"}}
+                 [org.vlacs/oarlock "0.1.0-20140623_210805-g5384de5" :exclusions [com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7-20140603_205620-gd255b55"]
                  ^{:voom {:repo "https://github.com/vlacs/traveler"}}
