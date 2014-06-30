@@ -14,9 +14,9 @@
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6-20140619_005947-gb4bb7d4" :exclusions [org.eclipse.jetty.orbit/javax.servlet com.taoensso/timbre]]
                  ^{:voom {:repo "https://github.com/vlacs/navigator" :branch "dev"}}
-                 [org.vlacs/navigator "0.1.3-20140625_214524-g5b25f37" :exclusions [com.datomic/datomic-free]]
+                 [org.vlacs/navigator "0.1.3-20140630_172219-g25afde4" :exclusions [com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/oarlock" :branch "dev"}}
-                 [org.vlacs/oarlock "0.1.0-20140625_174610-gc477785" :exclusions [com.datomic/datomic-free]]
+                 [org.vlacs/oarlock "0.1.0-20140630_170730-gf147427" :exclusions [com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7-20140625_192643-gf77b7f9"]
                  ^{:voom {:repo "https://github.com/vlacs/traveler"}}
@@ -28,7 +28,7 @@
                  [clj-http "0.9.1"]
                  [clj-time "0.7.0"]
                  [liberator "0.11.0"]
-                 [org.immutant/immutant "1.1.1"
+                 [org.immutant/immutant "1.1.3"
                   :exclusions [org.hornetq/hornetq-core-client io.netty/netty]]]
 
   :pedantic? :warn ; :abort
