@@ -35,7 +35,7 @@
 
   :immutant {:init galleon/init
              :resolve-dependencies true
-             :context-path "/"}
+             :context-path "/galleon/"}
 
   :plugins [[lein-cloverage "1.0.2"]
             [lein-immutant "1.2.1"]]
