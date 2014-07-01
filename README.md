@@ -32,6 +32,10 @@ You can build the necessary dependencies for galleon and run the tests at the sa
 
 ```$ ./test.sh```
 
+## Browser path
+Note that the app deploys to /galleon/ to allow for multiple apps to be deployed
+in one immutant.
+
 ## Using the queues
 The queues in the gangway namespace use token based authentication, so you must include an Authorization header with your HTTP request.
 
