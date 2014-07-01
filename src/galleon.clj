@@ -62,12 +62,12 @@
   (if (.isFile (File. path)) true false))
 
 (defn load-system-config []
-  (let [path "galleon-conf.edn"]
-    (if (file-exists? path)
-      (assoc (clojure.edn/read-string (slurp path))
-             :enqueue-fn gw-enqueue/enqueue!
-             )
-      (throw (Exception. (str "Config file missing: " path))))))
+  (let [file
+        #_
+        "/home/moquist/projects/galleon/galleon-conf.edn"
+        (immutant.util/app-relative "galleon-conf.edn")]
+    (assoc (clojure.edn/read-string (slurp file))
+      :enqueue-fn gw-enqueue/enqueue!)))
 
 (defn init-schema!
   "Combines schematode schema and transacts it in."
