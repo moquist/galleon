@@ -9,7 +9,7 @@
             [navigator]
             [oarlock.schema :as o-schema]
             [timber.core :as timber]
-            [traveler.core :as tr-core]
+            [traveler]
             [traveler.schema :as tr-schema]
             [flare]))
 
@@ -28,9 +28,7 @@
     :start-fn! flare/configure!
     :schema flare/schema}
    {:app-name "Traveler"
-    :schema tr-schema/traveler-schema
-    :helmsman-context "traveler"
-    :helmsman-definition tr-core/helmsman-definition}
+    :schema tr-schema/schema}
    {:app-name "Navigator"
     :schema n-schema/schema
     :helmsman-context "navigator"

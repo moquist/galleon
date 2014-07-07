@@ -19,8 +19,8 @@
                  [org.vlacs/oarlock "0.1.0-20140630_170730-gf147427" :exclusions [com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7-20140625_192643-gf77b7f9"]
-                 ^{:voom {:repo "https://github.com/vlacs/traveler"}}
-                 [org.vlacs/traveler "0.2.12-20140619_005836-g30dfa6d"
+                 ^{:voom {:repo "https://github.com/vlacs/traveler" :branch "dev"}}
+                 [org.vlacs/traveler "0.3.0-20140707_163904-g9f2dce1"
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/flare" :branch "dev"}}
                  [org.vlacs/flare "0.1.0-20140625_193116-gba6c9d7" :exclusions [com.datomic/datomic-free]]
