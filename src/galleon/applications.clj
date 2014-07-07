@@ -34,9 +34,7 @@
     :helmsman-context "navigator"
     :helmsman-definition navigator/helmsman-def}
    {:app-name "Oarlock"
-    :schema o-schema/schema
-    :helmsman-context "oarlock"
-    :helmsman-definition (fn [_] [])}
+    :schema o-schema/schema}
    {:app-name "Gangway"
     :start-fn! gangway.util/start-queues!
     :schema gangway.schema/gangway-schema
