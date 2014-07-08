@@ -20,7 +20,7 @@
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7-20140625_192643-gf77b7f9"]
                  ^{:voom {:repo "https://github.com/vlacs/traveler" :branch "dev"}}
-                 [org.vlacs/traveler "0.3.0-20140707_201515-g432d07a"
+                 [org.vlacs/traveler "0.3.0-20140708_161526-g6a9568c"
                   :exclusions [org.vlacs/helmsman org.vlacs/hatch com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/flare" :branch "dev"}}
                  [org.vlacs/flare "0.1.0-20140707_172541-g163ca2f" :exclusions [com.datomic/datomic-free]]
