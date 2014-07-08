@@ -1,30 +1,20 @@
 (ns gangway.worker
   (:require [clojure.data.json :as json]
-            [gangway.validation :refer [construct-data]]
             [immutant.messaging :as msg]
             [navigator]
+            [traveler]
             [oarlock]))
 
 (def worker-dispatch
-  {:assert
-   {:task           oarlock/task-in
-    :perf-asmt      oarlock/perf-asmt-in
-    :student2perf-asmt oarlock/student2perf-asmt-in}})
-
-(defn get-worker-fn [message]
-  (let [header (:header message)
-        op (keyword (:operation header))
-        entity-type (keyword (:entity-type header))]
-    (get-in worker-dispatch [op entity-type])))
-
-(defn dispatch [db-conn message]
-  (let [wf (get-worker-fn message)]
-    ((get-worker-fn message) db-conn (construct-data message))))
+  {:task               oarlock/task-in
+   :perf-asmt          oarlock/perf-asmt-in
+   :student2perf-asmt  oarlock/student2perf-asmt-in
+   :user               traveler/user-in})
 
 (defn do-work [attache system message]
   (let [db-conn (:db-conn system)]
-    (let [parsed-message (json/read-str message :key-fn keyword)]
-      (dispatch db-conn parsed-message))))
+    (clojure.pprint/pprint message)
+    (((:entity-type message) worker-dispatch) db-conn message)))
 
 (comment
 

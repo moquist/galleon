@@ -21,7 +21,7 @@
                           :malformed? (fn [ctx]
                                         (let [message (slurp (get-in ctx [:request :body]))
                                               route-params (get-in ctx [:request :route-params])
-                                              validated (gw-validation/valid? message route-params :assert)]
+                                              validated (gw-validation/valid? message route-params)]
                                           (if (:valid validated)
                                             [false {::validated (:data  validated)}]
                                             [true  {::malformed (:error validated)}])))
@@ -30,7 +30,7 @@
                                    (let [rp  (get-in ctx [:request :route-params])
                                          qid (keyword (:qid rp))
                                          n   (get-in system [:gangway :queues qid :in :name])]
-                                     (gw-enqueue/enqueue! n (::validated ctx)))))
+                                     (gw-enqueue/enqueue! n (assoc (::validated ctx) :entity-type (keyword (:entity-type rp)))))))    ; TODO: rework gangway to avoid this uglyness
 
      :hi-there  (resource :available-media-types ["text/plain"]
                           :handle-ok (fn [_] "hi there"))}))

@@ -3,4 +3,3 @@
 
 (defn enqueue! [qn message]
   (msg/publish qn message))
-

@@ -3,7 +3,8 @@
             [clojure.pprint :refer [pprint]]
             [hatch]
             [schema.core :as s]
-            [oarlock.validation :as oar-val]))
+            [oarlock.validation :as oar-val]
+            [traveler.validation :as tr-val]))
 
 (defn construct-data
   "Combines route-params with incoming json message"
@@ -25,10 +26,10 @@
       {:valid true :data data})))
 
 (def validation-maps
-  {:assert
-   {:task           oar-val/validations
-    :perf-asmt      oar-val/validations
-    :student2perf-asmt oar-val/validations}})
+  {:task               oar-val/validations
+   :perf-asmt          oar-val/validations
+   :student2perf-asmt  oar-val/validations
+   :user               tr-val/validations})
 
 (defn valid-json?
   "Evaluates given message string to determine if it's valid JSON.
@@ -45,9 +46,9 @@
 (defn valid?
   "Runs a validation function to check if a message is valid.
   Returns true or false."
-  [msg rp op]
+  [msg rp]
   (let [entity-type (keyword (:entity-type rp))
-        validation-map (get-in validation-maps [op entity-type])]
+        validation-map (entity-type validation-maps)]
     (if (valid-json? msg)
       (let [parsed-msg (json/read-str msg :key-fn keyword)
             data (construct-data parsed-msg rp)]
