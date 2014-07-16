@@ -28,6 +28,7 @@
     :start-fn! flare/configure!
     :schema flare/schema}
    {:app-name "Traveler"
+    :start-fn traveler/configure!
     :schema tr-schema/schema}
    {:app-name "Navigator"
     :schema n-schema/schema
