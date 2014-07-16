@@ -1,5 +1,5 @@
 (ns gangway.auth
-  (:require [clojure.string :refer [split]]
+  (:require [clojure.string :as string]
             [clojure.pprint :refer [pprint]]
             [clj-time.core :as t]
             [clj-time.coerce :as t-c]
@@ -32,9 +32,9 @@
   (let [auth (get-in ctx [:request :headers "authorization"])]
     (if (nil? auth)
       (str "")
-      (let [split-auth (split auth #"\s+")]
+      (let [split-auth (string/split auth #"\s+")]
         (if (= (str "Token") (first split-auth))
-          (second split-auth)
+          (string/join " " (rest split-auth))
           (str ""))))))
 
 (defn gen-token
