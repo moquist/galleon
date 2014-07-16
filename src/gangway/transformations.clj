@@ -1,21 +1,18 @@
-(ns gangway.transformations)
-
-(def key-transformations
-  {:show-evidence}
-  )
+(ns gangway.transformations
+  (:require
+    [hatch]
+    [gangway.transformations.show-evidence.user :as se-user]))
 
 (defmulti transformation
-  (fn [client event-type data]
+  (fn [client event-type http-options data]
     [client event-type]))
 
-(defmethod transformation :default [client event-type data] data)
+(defmethod transformation :default [_ _ http-options data] [http-options data])
 (defmethod transformation
   [:show-evidence :event.type/traveler.user]
-  [_ event-type data]
-
+  [_ _ http-options data]
+  nil  
   )
-
-
 
 (defn filter-keep-on-map
   [data tkey-map]
@@ -50,3 +47,27 @@
     (filter-keep-on-map entity tkey-map)
     tval-map))
 
+(comment
+
+  (def test-data
+    (hatch/slam-all {:id-sk "123abc"
+                     :username "fbar"
+                     :password "nothing"
+                     :privilege "ADMIN"
+                     :lastname "Bar"
+                     :firstname "Foo"
+                     :email "fbar@fbar.fbar"
+                     :istest false
+                     :can-masquerade true}
+                    :user))
+
+  (transform-entity
+    test-data
+    gangway.transformations.show-evidence/user-transform-key-map
+    gangway.transformations.show-evidence/user-transform-value-map)
+
+  (filter-keep-on-map
+    test-data
+    gangway.transformations.show-evidence/user-transform-key-map)
+
+  )
