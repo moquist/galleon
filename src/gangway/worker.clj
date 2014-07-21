@@ -8,6 +8,7 @@
 (def worker-dispatch
   {:task               oarlock/task-in
    :perf-asmt          oarlock/perf-asmt-in
+   :section            oarlock/section-in
    :student2perf-asmt  oarlock/student2perf-asmt-in
    :user               traveler/user-in})
 

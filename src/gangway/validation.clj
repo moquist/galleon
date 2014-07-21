@@ -28,6 +28,7 @@
 (def validation-maps
   {:task               oar-val/validations
    :perf-asmt          oar-val/validations
+   :section            oar-val/validations
    :student2perf-asmt  oar-val/validations
    :user               tr-val/validations})
 
