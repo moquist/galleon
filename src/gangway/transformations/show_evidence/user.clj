@@ -1,6 +1,6 @@
 (ns gangway.transformations.show-evidence.user)
 
-(def user-transform-key-map
+(def transform-key-map
   {:user/id-sk :extUserID
    :user/firstname :firstName
    :user/lastname :lastName
@@ -15,6 +15,6 @@
     "STUDENT" "Student"
     "TEACHER" "Teacher"))
 
-(def user-transform-value-map
+(def transform-value-map
   {:role transform-role})
  

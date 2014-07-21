@@ -78,6 +78,23 @@
                                    []
                                    applications)))
 
+(defn ensure-flare-clients!
+  [system]
+  (timbre/info "Ensuring flare clients exist...")
+  (when-let [clients (get-in system [:config :attache :endpoints])]
+    (doseq [c clients]
+      (flare.client/register! (:db-conn system) c (str d/squuid)))))
+
+(defn ensure-flare-subscriptions!
+  [system]
+  (timbre/info "Ensuring flare subscriptions exist...")
+  (when-let [subscriptions (get-in system [:config :attache :subscriptions])]
+    (doseq [s subscriptions]
+      (apply 
+        (partial flare.subscription/subscribe! (:db-conn system))
+        s)))
+  system)
+
 (defn init-system!
   "Creates the system state from the config and applications maps."
   [config-map applications]
@@ -86,19 +103,21 @@
         db-conn (d/connect datomic-uri)
         system {:db-conn db-conn
                 :config config-map
-                :attaches {:endpoints attache/endpoints
-                           :transforms attache/transformations}}]
+                ;;; This is going to change slightly (below). --jdoane
+                :attaches {:endpoints attache/endpoints}}]
     (init-schema! db-conn applications)
-    (doseq [app applications]
-      (when (fn? (:init-fn! app))
-        ((:init-fn! app) system)))
+    (when db-create-rval
+      (doseq [app applications]
+        (when (fn? (:init-fn! app))
+          (timbre/info "Running init-fn! for " (:app-name app "no name"))
+          ((:init-fn! app) system))))
     system))
 
 ;;; TODO: Give reduce a try instead of (l)oop-recur.
 (defn start-system!
   [_] ;; TODO: handle incoming system here?
   (timbre/merge-config! default-logging-options)
-  (timbre/debug "Galleon starting up...")
+  (timbre/info "Galleon starting up...")
   (let [apps galleon.applications/system-applications
         system (init-system!
                 (load-system-config)
@@ -111,14 +130,16 @@
                    (recur
                     (if-let [start-fn! (:start-fn! app nil)]
                       (do
-                        (timbre/debug "Starting sub-system: " (:app-name app))
+                        (timbre/info "Starting sub-system: " (:app-name app))
                         (start-fn! system-startup-state))
                       system-startup-state)
                     (first remaining-apps)
                     (vec (rest remaining-apps)))))]
+    (ensure-flare-clients! system)
+    (ensure-flare-subscriptions! system)
     (timbre/debug "Starting immutant web server...")
-    (assoc-in system [:web-server :immutant]
-              (web/start (galleon.applications/system-handler system)))))
+    (web/start (galleon.applications/system-handler system))
+    system))
 
 (defn stop-system!
   [system]

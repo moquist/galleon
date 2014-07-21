@@ -1,18 +1,8 @@
 (ns gangway.transformations
   (:require
     [hatch]
+    [gangway.transformations.show-evidence :as se]
     [gangway.transformations.show-evidence.user :as se-user]))
-
-(defmulti transformation
-  (fn [client event-type http-options data]
-    [client event-type]))
-
-(defmethod transformation :default [_ _ http-options data] [http-options data])
-(defmethod transformation
-  [:show-evidence :event.type/traveler.user]
-  [_ _ http-options data]
-  nil  
-  )
 
 (defn filter-keep-on-map
   [data tkey-map]
@@ -63,11 +53,5 @@
 
   (transform-entity
     test-data
-    gangway.transformations.show-evidence/user-transform-key-map
-    gangway.transformations.show-evidence/user-transform-value-map)
-
-  (filter-keep-on-map
-    test-data
-    gangway.transformations.show-evidence/user-transform-key-map)
-
-  )
+    se-user/user-transform-key-map
+    se-user/user-transform-value-map))

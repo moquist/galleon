@@ -25,10 +25,10 @@
    {:app-name "Timber"
     :helmsman-definition timber/helmsman-assets}
    {:app-name "Flare"
-    :start-fn! flare/configure!
     :schema flare/schema}
    {:app-name "Traveler"
-    :start-fn traveler/start!
+    :init-fn! traveler/init!
+    :start-fn! traveler/start!
     :schema tr-schema/schema}
    {:app-name "Navigator"
     :schema n-schema/schema
@@ -40,9 +40,7 @@
     :start-fn! gangway.util/start-queues!
     :schema gangway.schema/gangway-schema
     :helmsman-context "gangway"
-    :helmsman-definition gangway.web/helmsman-definition}
-   {:app-name "Flare notifier"
-    :start-fn! flare/start!}])
+    :helmsman-definition gangway.web/helmsman-definition}])
 
 (defn make-app-context
   [system app]
