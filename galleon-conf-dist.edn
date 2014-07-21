@@ -1,1 +1,4 @@
-{:datomic-url "datomic:mem://galleon-test"}
+{:datomic-url "datomic:mem://galleon-test"
+ :attache {:endpoints [:moodle :show-evidence]
+           :subscriptions
+           [[:show-evidence :event.type/traveler.user "http://somesite.come/api/user"]]}}
