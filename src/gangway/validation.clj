@@ -10,7 +10,7 @@
 (defn construct-data
   "Combines route-params with incoming json message"
   [msg rp]
-  (pprint msg)
+  #_(pprint msg)    ; if you're going to uncomment this, consider using timbre
   (merge msg {:id-sk (:id-sk rp)
               :id-sk-origin (keyword (:id-sk-origin rp))}))
 
@@ -62,6 +62,6 @@
 (comment
 
   (def msg {:name "flarp" :version "v2" :description "this is a description"})
-  (def rp {:id-sk "392" :id-sk-origin "showevidence" :entity-type "task" :qid "showevidence"})
+  (def rp {:id-sk "392" :id-sk-origin "show-evidence" :entity-type "task" :qid "show-evidence"})
 
   )

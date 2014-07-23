@@ -23,7 +23,7 @@
                  [org.vlacs/traveler "0.3.0-20140721_134856-g001f72c"
                   :exclusions [org.vlacs/helmsman com.datomic/datomic-free org.vlacs/hatch]]
                  ^{:voom {:repo "https://github.com/vlacs/flare" :branch "dev"}}
-                 [org.vlacs/flare "0.1.0-20140718_201951-g1750394" :exclusions [com.datomic/datomic-free org.vlacs/hatch]]
+                 [org.vlacs/flare "0.1.0-20140723_135328-g0a4e347" :exclusions [com.datomic/datomic-free org.vlacs/hatch]]
                  ^{:voom {:repo "https://github.com/vlacs/hatch" :branch "dev"}}
                  [org.vlacs/hatch "0.2.3-20140721_152704-g587007c"]
 

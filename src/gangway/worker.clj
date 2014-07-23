@@ -16,7 +16,7 @@
 
 (defn do-work [attache system message]
   (let [db-conn (:db-conn system)]
-    (clojure.pprint/pprint message)
+    #_(clojure.pprint/pprint message)   ; if you're going to uncomment this, consider using timbre
     (((:entity-type message) worker-dispatch) db-conn message)))
 
 (comment
