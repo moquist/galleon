@@ -102,9 +102,7 @@
         db-create-rval (d/create-database datomic-uri)
         db-conn (d/connect datomic-uri)
         system {:db-conn db-conn
-                :config config-map
-                ;;; This is going to change slightly (below). --jdoane
-                :attaches {:endpoints attache/endpoints}}]
+                :config config-map}]
     (init-schema! db-conn applications)
     (when db-create-rval
       (doseq [app applications]
@@ -130,7 +128,7 @@
                    (recur
                     (if-let [start-fn! (:start-fn! app nil)]
                       (do
-                        (timbre/info "Starting sub-system: " (:app-name app))
+                        (timbre/info "Running start-fn! for " (:app-name app "no name"))
                         (start-fn! system-startup-state))
                       system-startup-state)
                     (first remaining-apps)

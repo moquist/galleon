@@ -36,7 +36,7 @@
   :immutant {:init galleon/init
              :resolve-dependencies true
              :context-path "/"
-             :virtual-host "localhost"
+             :virtual-host ["127.0.0.1"]
              :nrepl-port 0}
 
   :plugins [[lein-cloverage "1.0.2"]

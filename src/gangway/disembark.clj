@@ -20,11 +20,11 @@
   (when-let [ce (flare.client/get-client (:db-conn system) client)]
     (:client/auth-token ce)))
 
-(defmulti api-call
+(defmulti api-call!
   (fn [system client event-type data]
     [client event-type]))
 
-(defmethod api-call
+(defmethod api-call!
   [:show-evidence :event.type/traveler.user]
   [system client event-type data]
   (let [se-data (transform/transform-entity
@@ -33,12 +33,14 @@
                   t-se-user/transform-value-map)]
     nil))
 
-(defmethod api-call
+(defmethod api-call!
   [:show-evidence :event.type/oarlock.section]
   [system client event-type data]
   nil
   )
 
-;;; Alter this to use api-caller multi-method.
-(defn disembark! [attache system msg]
-  (spit "/tmp/blarp.edn" (str msg) :append true))
+(defn disembark! 
+  "This fn is a wrapper for the api-call! multimethod."
+  [system client event-type data]
+  (api-call! system client event-type data)
+  #_(spit "/tmp/blarp.edn" (str msg) :append true))
