@@ -4,7 +4,8 @@
             [hatch]
             [schema.core :as s]
             [oarlock.validation :as oar-val]
-            [traveler.validation :as tr-val]))
+            [traveler.validation :as tr-val]
+            [navigator.validation :as nav-val]))
 
 (defn construct-data
   "Combines route-params with incoming json message"
@@ -28,8 +29,10 @@
 (def validation-maps
   {:task               oar-val/validations
    :perf-asmt          oar-val/validations
+   :section            oar-val/validations
    :student2perf-asmt  oar-val/validations
-   :user               tr-val/validations})
+   :user               tr-val/validations
+   :comp               nav-val/validations})
 
 (defn valid-json?
   "Evaluates given message string to determine if it's valid JSON.

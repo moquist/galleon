@@ -3,13 +3,16 @@
             [immutant.messaging :as msg]
             [navigator]
             [traveler]
-            [oarlock]))
+            [oarlock]
+            [navigator]))
 
 (def worker-dispatch
   {:task               oarlock/task-in
    :perf-asmt          oarlock/perf-asmt-in
+   :section            oarlock/section-in
    :student2perf-asmt  oarlock/student2perf-asmt-in
-   :user               traveler/user-in})
+   :user               traveler/user-in
+   :comp               navigator/comp-in})
 
 (defn do-work [attache system message]
   (let [db-conn (:db-conn system)]
