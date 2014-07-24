@@ -31,6 +31,8 @@
                   data
                   t-se-user/transform-key-map
                   t-se-user/transform-value-map)]
+    (flare.api.out/call-api)
+
     nil))
 
 (defmethod api-call!

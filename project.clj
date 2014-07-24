@@ -38,7 +38,7 @@
   :immutant {:init galleon/init
              :resolve-dependencies true
              :context-path "/"
-             :virtual-host ["127.0.0.1"]
+             :virtual-host ["127.0.0.1" "khan.office.vlacs.org"]
              :nrepl-port 0}
 
   :plugins [[lein-cloverage "1.0.2"]

@@ -1,17 +1,5 @@
-(ns gangway.transformations.show-evidence)
-
-(def default-http-opts
-  {:timeout 60
-   :user-agent "org.vlacs/flare/http-kit"
-   ;;;:method :post
-   :headers {:Accept "application/json"
-             :Accept-Charset "utf-8"
-             :Cache-Control "no-cache"
-             :Connection "keep-alive"
-             :X-Requested-With "clojure/http-kit"}
-   :keepalive 10000
-   :insecure? false
-   :follow-redirects false})
+(ns gangway.transformations.show-evidence
+  (:require [flare.api.out]))
 
 (defn make-url
   [base-url & segments]
@@ -37,7 +25,7 @@
 
 (defn make-creation-opts
   ([auth-token data url]
-   (make-creation-opts default-http-opts
+   (make-creation-opts flare.api.out/default-opts
                        auth-token
                        data
                        url))
