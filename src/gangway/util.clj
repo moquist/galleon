@@ -17,9 +17,9 @@
 
 ;; example of structure in system
 #_
-{:showevidence {:in {:name "queue.in.showevidence"
+{:show-evidence {:in {:name "queue.in.show-evidence"
                      :worker gangway.worker/do-work}
-                :out {:name "queue.out.showevidence"
+                :out {:name "queue.out.show-evidence"
                       :worker gangway.disembark/disembark!}}
  :moodle {:in {:name "queue.in.moodle"
                :worker gangway.worker/do-work}

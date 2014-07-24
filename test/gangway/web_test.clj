@@ -11,7 +11,7 @@
 
 (def token (:token (gw-auth/add-queue-token! "Testing" 3 (:db-conn galleon/system))))
 
-(def uri (format "%s/gangway/in/showevidence/showevidence/task/392" (immutant.util/app-uri)))
+(def uri (format "%s/gangway/in/show-evidence/show-evidence/task/392" (immutant.util/app-uri)))
 
 (def invalid-message
   (json/json-str
